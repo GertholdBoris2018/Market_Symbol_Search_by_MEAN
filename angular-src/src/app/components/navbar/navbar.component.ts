@@ -11,12 +11,12 @@ import { FlashMessagesService } from 'angular2-flash-messages';
 		trigger(
       'enterAnimation', [
         transition(':enter', [
-          style({transform: 'translateY(100%)', opacity: 0}),
-          animate('500ms', style({transform: 'translateY(0)', opacity: 1}))
+          style({transform: 'translateX(100%)', opacity: 0}),
+          animate('500ms', style({transform: 'translateX(0)', opacity: 1}))
         ]),
         transition(':leave', [
-          style({transform: 'translateY(0)', opacity: 1}),
-          animate('500ms', style({transform: 'translateY(100%)', opacity: 0}))
+          style({transform: 'translateX(0)', opacity: 1}),
+          animate('500ms', style({transform: 'translateX(100%)', opacity: 0}))
         ])
       ]
     )
@@ -42,5 +42,6 @@ export class NavbarComponent implements OnInit {
 		this.router.navigate(['/login']);
 		return false;
 	}
-	show:boolean = false;
+  show:boolean = false;
+  showLang:boolean = false;
 }

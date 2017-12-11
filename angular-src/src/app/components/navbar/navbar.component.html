@@ -7,7 +7,7 @@
 				</div> 
 			</div> 
 			<!-- ngIf: selectMarket.visibility -->
-			<div class="small-6 columns text-right" data-ng-if="selectMarket.visibility"> 
+			<div class="small-6 columns text-right"> 
 				<div class="bc-bug-report"> 
 					<a class="bc-bug-report__button" href="#"> Report an Issue </a> 
 				</div> 
@@ -16,13 +16,13 @@
 				</div> 
 				<div class="select-market-block"> 
 					<span class="market-block-title-outer">Market:</span> 
-					<span class="market-dropdown-toggle" data-dropdown-toggle="#select-market-dropdown" data-trigger-event-on-click=""> 
+					<span class="market-dropdown-toggle" data-dropdown-toggle="#select-market-dropdown" (click)="showLang = !showLang"> 
 						<span class="market-block-title-inner show-for-small-down">Market:</span> 
 						<div class="bc-flag flag-us"></div>
 						<i class="bc-glyph-chevron-down"></i> 
 						<i class="bc-glyph-chevron-up"></i> 
 					</span> 
-					<ul class="f-dropdown market-dropdown" id="select-market-dropdown" style="display: none;">  
+					<ul class="f-dropdown market-dropdown" id="select-market-dropdown" *ngIf="showLang">  
 						<li> <a class="current-market"> <i class="bc-glyph-check"></i> <span>US</span><div class="bc-flag flag-us"></div> </a> </li>  
 						<li><a data-change-market="" data-market="ca"> <i class="bc-glyph-check"></i> <span>Canada</span><div class="bc-flag flag-ca"></div> </a> </li> 
 						<li> <a data-change-market="" data-market="uk"> <i class="bc-glyph-check"></i> <span>UK</span> <div class="bc-flag flag-gb"></div> </a> </li> 
