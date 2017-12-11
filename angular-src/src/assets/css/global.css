@@ -1,3 +1,12 @@
 #select-market-dropdown{
     display:block !important;
 }
+.list-icon{
+    width: 30px;
+}
+.text-left{
+    text-align: left !important;
+}
+.text-center{
+    text-align: center !important;
+}

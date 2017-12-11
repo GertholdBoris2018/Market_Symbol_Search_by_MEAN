@@ -39,6 +39,19 @@ export class AuthService {
 		return this.http.get('http://localhost:3000/users/profile', {headers: headers})
 			.map(res => res.json());
 	}
+	//get coins
+	getAllCoins(){
+		let headers = new Headers();
+
+		//load token so we have access to this.authToken
+		this.loadToken();
+		//send token with header
+		headers.append('Authorization', this.authToken);
+
+		headers.append('Content-Type','application/json');
+		return this.http.get('http://localhost:3000/coins/getAll', {headers: headers})
+			.map(res => res.json());
+	}
 
 	//store user data in local storage
 	storeUserData(token, user){

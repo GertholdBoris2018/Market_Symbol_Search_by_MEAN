@@ -1,22 +1,26 @@
 {
-	"name": "market-symbols-app",
-	"version": "1.0.0",
-	"description": "market symbols searching app",
-	"main": "app.js",
-	"scripts": {
-			"test": "echo \"Error: no test specified\" && exit 1",
-			"start": "node app"
-	},
-	"dependencies": {
-			"bcryptjs": "*",
-			"body-parser": "*",
-			"cors": "*",
-			"express": "*",
-			"jsonwebtoken": "*",
-			"mongoose": "^4.10.8",
-			"passport": "*",
-			"passport-jwt": "*"
-	},
-	"author": "Jon",
-	"license": "ISC"
+		"name": "market-symbols-app",
+		"version": "1.0.0",
+		"description": "market symbols searching app",
+		"main": "app.js",
+		"scripts": {
+				"test": "echo \"Error: no test specified\" && exit 1",
+				"start": "node app"
+		},
+		"dependencies": {
+				"bcryptjs": "*",
+				"body-parser": "*",
+				"cors": "*",
+				"express": "*",
+				"jsonwebtoken": "*",
+				"mongoose": "^4.10.8",
+				"passport": "*",
+				"passport-jwt": "*",
+				"request": "^2.83.0",
+				"morgan": "~1.9.0",
+				"node-schedule": "^1.2.5",
+				"filereader": "0.10.3"
+		},
+		"author": "Jon",
+		"license": "ISC"
 }

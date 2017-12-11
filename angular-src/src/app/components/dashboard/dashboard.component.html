@@ -1,2 +1,40 @@
 <h2 class="page-header">Dashboard</h2>
-<p>Welcome to your dashboard! HAVE FUN USING THE APP!</p>
+
+
+<table class="table table-striped text-left" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="20">
+    <thead>
+    <tr>
+        <th  class="text-center">
+            <mfDefaultSorter by="Symbol">Symbol</mfDefaultSorter>
+        </th>
+        <th class="text-center">
+            <mfDefaultSorter by="Symbol">Coin Name</mfDefaultSorter>
+        </th>
+        <th class="text-center">
+            <mfDefaultSorter by="Symbol">Full Name</mfDefaultSorter>
+        </th>
+        <th class="text-center">
+            <mfDefaultSorter by="Symbol">Total Coin Supply</mfDefaultSorter>
+        </th>
+        <th class="text-center">
+            <mfDefaultSorter by="Symbol">ProofType</mfDefaultSorter>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of mf.data">
+        <td class="text-center"><img class="list-icon" src="{{item.ImageUrl}}"/> {{item.Symbol}}</td>
+        <td class="text-center">{{item.CoinName}}</td>
+        <td class="text-center">{{item.FullName}}</td>
+        <td class="text-center">{{item.TotalCoinSupply}}</td>
+        <td class="text-center">{{item.ProofType}}</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td class="col-md-5">
+            <mfBootstrapPaginator [rowsOnPageSet]="[20,50,100,200]"></mfBootstrapPaginator>
+        </td>
+    </tr>
+    </tfoot>
+</table>

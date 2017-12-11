@@ -1,0 +1,10 @@
+{
+    "apiDomain":"https://www.cryptocompare.com",
+    "getCoins": {
+        "method": "GET",
+        "url": "https://www.cryptocompare.com/api/data/coinlist/",
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    }
+}
