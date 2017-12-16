@@ -11,6 +11,7 @@ var request = require('request');
 var fs = require('fs');
 var apis_config = 'config/apis.json';
 var Coin = require('./models/coin');
+var CoinTicker = require('./models/coinTicker');
 //connect to database
 mongoose.connect(config.database);
 
@@ -35,7 +36,7 @@ const app = express();
 const users = require('./routes/users');
 const coinServer = require('./routes/coinServer')
 //port number
-const port = 3000;
+const port = 4000;
 
 // Set Static Folder. he called it public i'm calling it client
 app.use(express.static(path.join(__dirname, 'client')));
@@ -78,8 +79,15 @@ function getAllCoins(){
 		//console.log(coins);
 	});
 }
+var stored_coin_tickers = [];
+function getAllCoinTickers(){
+	CoinTicker.find({},'coinName -_id', function(err,coints){
+		stored_coin_tickers = coints;
+		//console.log(coins);
+	});
+}
 //schedule tasks for get all coins
-var rule = schedule.scheduleJob("*/1 * * * *", function() {
+var rule = schedule.scheduleJob("*/3 * * * *", function() {
 	console.log('Creating Schedule for Get Coin List...');
 	//get all existing coins from the database
 	getAllCoins();
@@ -122,6 +130,56 @@ var rule = schedule.scheduleJob("*/1 * * * *", function() {
 				}
 			}
 		}
+		
+	});
+});
+
+//schedule task for get ticker value per coin
+var rule = schedule.scheduleJob("*/1 * * * *", function() {
+	console.log('Creating Schedule for Get Coin Ticker Value...');
+	//get all existing coins from the database
+	getAllCoinTickers();
+	request(apis_config_options.getTickerCoin, function(err, response, body) {
+		var res = JSON.parse(body);
+		res.forEach(function(item,idx,array){
+			var symbol = item.id;
+			var picked =  stored_coin_tickers.filter(function(value){ return value.coinName==symbol;});
+
+			var newCoin = new CoinTicker();
+			newCoin.coinName = item.id;
+			newCoin.name = item.name;
+			newCoin.symbol = item.symbol;
+			newCoin.rank = item.rank;
+			newCoin.price_usd = item.price_usd;
+			newCoin.price_btc = item.price_btc;
+			newCoin['24h_volume_usd'] = item['24h_volume_usd'];
+			newCoin['market_cap_usd'] = item['market_cap_usd'];
+			newCoin['available_supply'] = item['available_supply'];
+			newCoin['total_supply'] = item['total_supply'];
+			newCoin['max_supply'] = item['max_supply'];
+			newCoin['percent_change_1h'] = item['percent_change_1h'];
+			newCoin['percent_change_24h'] = item['percent_change_24h'];
+			newCoin['percent_change_7d'] = item['percent_change_7d'];
+			newCoin['last_updated'] = item['last_updated'];
+
+
+			if(picked.length > 0){
+				var query = { coinName : symbol };
+				var productToUpdate = {};
+				productToUpdate = Object.assign(productToUpdate, newCoin._doc);
+				delete productToUpdate._id;
+				console.log(productToUpdate);
+				CoinTicker.findOneAndUpdate(query, productToUpdate , function(err){
+					//if(err) console.log(err);
+				});
+			}
+			else{
+				newCoin.save();
+			}
+			if(idx === array.length - 1){
+				getAllCoinTickers();
+			}
+		});
 		
 	});
 });

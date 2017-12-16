@@ -1,33 +1,39 @@
 <h2 class="page-header">Dashboard</h2>
-
-
-<table class="table table-striped text-left" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="20">
+<table class="table table-striped coinTickers" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="20">
     <thead>
     <tr>
         <th  class="text-center">
-            <mfDefaultSorter by="Symbol">Symbol</mfDefaultSorter>
+            <mfDefaultSorter by="Symbol">Rank</mfDefaultSorter>
         </th>
         <th class="text-center">
-            <mfDefaultSorter by="Symbol">Coin Name</mfDefaultSorter>
+            <mfDefaultSorter by="Symbol">Name</mfDefaultSorter>
         </th>
         <th class="text-center">
-            <mfDefaultSorter by="Symbol">Full Name</mfDefaultSorter>
+            <mfDefaultSorter by="Symbol">Market Cap</mfDefaultSorter>
         </th>
         <th class="text-center">
-            <mfDefaultSorter by="Symbol">Total Coin Supply</mfDefaultSorter>
+            <mfDefaultSorter by="Symbol">Price</mfDefaultSorter>
         </th>
         <th class="text-center">
-            <mfDefaultSorter by="Symbol">ProofType</mfDefaultSorter>
+            <mfDefaultSorter by="Symbol">Volumn(24)</mfDefaultSorter>
+        </th>
+        <th class="text-center">
+            <mfDefaultSorter by="Symbol">Circulating Supply</mfDefaultSorter>
+        </th>
+        <th class="text-center">
+            <mfDefaultSorter by="Symbol">Change (24)</mfDefaultSorter>
         </th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let item of mf.data">
-        <td class="text-center"><img class="list-icon" src="{{item.ImageUrl}}"/> {{item.Symbol}}</td>
-        <td class="text-center">{{item.CoinName}}</td>
-        <td class="text-center">{{item.FullName}}</td>
-        <td class="text-center">{{item.TotalCoinSupply}}</td>
-        <td class="text-center">{{item.ProofType}}</td>
+        <td class="text-center">{{item.rank}}</td>
+        <td class="text-center">{{item.name}}</td>
+        <td class="text-center">${{item.market_cap_usd}}</td>
+        <td class="text-center">${{item.price_usd}}</td>
+        <td class="text-center">${{item['24h_volume_usd']}}</td>
+        <td class="text-center">{{item['available_supply']}}BTC</td>
+        <td class="text-center">{{item['percent_change_24h']}}%</td>
     </tr>
     </tbody>
     <tfoot>
@@ -38,3 +44,4 @@
     </tr>
     </tfoot>
 </table>
+

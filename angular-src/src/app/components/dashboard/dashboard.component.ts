@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
+import { CoinService } from '../../services/coin.service';
 import { Router } from '@angular/router';
 import {Http} from "@angular/http";
 @Component({
@@ -16,12 +17,13 @@ export class DashboardComponent implements OnInit {
   public sortOrder = "asc";
 
   constructor(
-		private authService: AuthService,
+    private authService: AuthService,
+    private coinService: CoinService,
 		private router: Router
 	) { }
 
   ngOnInit() :void {
-    this.authService.getAllCoins().subscribe(res => {
+    this.coinService.getAllCoinTickers().subscribe(res => {
       
       let msg = res.msg;
       if(msg == 'success'){
@@ -33,12 +35,5 @@ export class DashboardComponent implements OnInit {
 			console.log(err);
 			return false;
 		});
-  }
-  public toInt(num: string) {
-    return +num;
-  }
-
-  public sortByWordLength = (a: any) => {
-      return a.city.length;
   }
 }

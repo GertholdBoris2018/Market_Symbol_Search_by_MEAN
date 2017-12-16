@@ -50,6 +50,9 @@
     }
   },
   "defaults": {
+    "serve": {
+      "port": 3000
+  },
     "styleExt": "css",
     "prefixInterfaces": false,
     "inline": {

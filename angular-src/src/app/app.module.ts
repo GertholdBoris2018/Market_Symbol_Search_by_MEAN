@@ -14,6 +14,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 
 import { ValidateService } from './services/validate.service';
 import { AuthService } from './services/auth.service';
+import { CoinService } from './services/coin.service';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { AuthGuard } from './guards/auth.guard';
 import {DataTableModule} from "angular2-datatable";
@@ -44,7 +45,7 @@ const appRoutes: Routes = [
     FlashMessagesModule,
     DataTableModule
   ],
-  providers: [ValidateService, AuthService, AuthGuard],
+  providers: [ValidateService, AuthService,CoinService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
