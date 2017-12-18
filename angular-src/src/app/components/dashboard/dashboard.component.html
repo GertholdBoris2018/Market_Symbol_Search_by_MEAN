@@ -1,5 +1,5 @@
 <h2 class="page-header">Dashboard</h2>
-<table class="table table-striped coinTickers" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="20">
+<!-- <table class="table table-striped coinTickers" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="20">
     <thead>
     <tr>
         <th  class="text-center">
@@ -43,5 +43,43 @@
         </td>
     </tr>
     </tfoot>
-</table>
+</table> -->
 
+
+<mat-table #table [dataSource]="dataSource" class="example-table" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+
+<!--- Note that these columns can be defined in any order.
+The actual rendered columns are set as a property on the row definition" -->
+
+<!-- Number Column -->
+<ng-container matColumnDef="number">
+    <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.number }}</mat-cell>
+</ng-container>
+
+<!-- Title Column -->
+<ng-container matColumnDef="title">
+    <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.title }}</mat-cell>
+</ng-container>
+
+<!-- State Column -->
+<ng-container matColumnDef="state">
+    <mat-header-cell *matHeaderCellDef>State</mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.state }}</mat-cell>
+</ng-container>
+
+<!-- Created Column -->
+<ng-container matColumnDef="created">
+    <mat-header-cell *matHeaderCellDef disableClear="true">
+        Created
+    </mat-header-cell>
+    <mat-cell *matCellDef="let row">{{ row.created_at | date }}</mat-cell>
+</ng-container>
+
+<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<mat-paginator [length]="resultsLength" [pageSize]="30">
+</mat-paginator>
