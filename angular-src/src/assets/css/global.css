@@ -67,3 +67,16 @@
   .mat-icon-button{
     background-color: transparent !important;
   }
+
+  .margin-right-5{
+    margin-right: 5px !important;
+  }
+ .mat-column--{
+   max-width:60px;
+ }
+ .red{
+   color: red !important;
+ }
+ .green { 
+   color : green !important;
+ }

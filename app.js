@@ -127,6 +127,7 @@ var rule = schedule.scheduleJob("*/3 * * * *", function() {
 				}
 				if(i == keys.length - 1){
 					getAllCoins();
+					console.log('Schedule for Get Coin List Done.');
 				}
 			}
 		}
@@ -136,7 +137,7 @@ var rule = schedule.scheduleJob("*/3 * * * *", function() {
 
 //schedule task for get ticker value per coin
 var rule = schedule.scheduleJob("*/1 * * * *", function() {
-	console.log('Creating Schedule for Get Coin Ticker Value...');
+	console.log('Creating Schedule for Get Coin Tickers Value...');
 	//get all existing coins from the database
 	getAllCoinTickers();
 	request(apis_config_options.getTickerCoin, function(err, response, body) {
@@ -168,7 +169,6 @@ var rule = schedule.scheduleJob("*/1 * * * *", function() {
 				var productToUpdate = {};
 				productToUpdate = Object.assign(productToUpdate, newCoin._doc);
 				delete productToUpdate._id;
-				console.log(productToUpdate);
 				CoinTicker.findOneAndUpdate(query, productToUpdate , function(err){
 					//if(err) console.log(err);
 				});
@@ -178,6 +178,7 @@ var rule = schedule.scheduleJob("*/1 * * * *", function() {
 			}
 			if(idx === array.length - 1){
 				getAllCoinTickers();
+				console.log('Schedule for Get Coin Tickers Done.');
 			}
 		});
 		

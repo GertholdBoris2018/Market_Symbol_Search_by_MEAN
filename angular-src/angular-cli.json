@@ -19,7 +19,8 @@
       "prefix": "app",
       "styles": [
         "assets/css/styles.css",
-        "assets/css/global.css"
+        "assets/css/global.css",
+        "assets/css/coin.css"
       ],
       "scripts": [],
       "environments": {
