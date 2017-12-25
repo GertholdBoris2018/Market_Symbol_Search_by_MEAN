@@ -1,6 +1,7 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 #select-market-dropdown{
     display:block !important;
+    z-index: 10;
 }
 .list-icon{
     width: 30px;

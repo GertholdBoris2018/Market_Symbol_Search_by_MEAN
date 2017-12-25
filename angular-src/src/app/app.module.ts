@@ -21,7 +21,7 @@ import { CoinService } from './services/coin.service';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 import { AuthGuard } from './guards/auth.guard';
 import {DataTableModule} from "angular2-datatable";
-
+import { APP_BASE_HREF } from '@angular/common';
 import '../polyfills';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
