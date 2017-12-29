@@ -38,10 +38,14 @@ export class NavbarComponent implements OnInit {
 		this.flashMessage.show('Congrats! You are logged out', {
 			cssClass:'alert-success',
 			timeout: 3000
-		});
+    });
+    this.show = false;
 		this.router.navigate(['/login']);
 		return false;
-	}
+  }
+  closeTopBar(){
+    this.show = false;
+  }
   show:boolean = false;
   showLang:boolean = false;
 }

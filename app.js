@@ -141,6 +141,7 @@ var rule = schedule.scheduleJob("*/1 * * * *", function() {
 	//get all existing coins from the database
 	getAllCoinTickers();
 	request(apis_config_options.getTickerCoin, function(err, response, body) {
+		
 		var res = JSON.parse(body);
 		res.forEach(function(item,idx,array){
 			var symbol = item.id;

@@ -35,25 +35,17 @@
 		<div class="company-info-inner" *ngIf="show" [@enterAnimation]> 
 			<div class="row">
 				<div class="small-12 column">
-					<div class="company-info-row"> <h3 class="company-info-title">Financial Technology &amp; Market Data</h3> 
+					<div class="company-info-row"> 
+						<h3 class="company-info-title">
+							Coin Information
+						</h3> 
 						<div>  
 							<ul> 
-								<li> <a target="_self" href="#">Data Services</a> </li> 
-								<li> <a target="_self" href="#">Data Coverage</a> </li> 
-								<li> <a target="_self" href="#">Data Management</a> </li> 
-							</ul>  
-							<ul>  
-								<li> <a target="_self" href="#">Digital Solutions</a> </li>
-								<li> <a target="_self" href="#">OnDemand APIs</a> </li>  
-								<li> <a target="_self" href="#">Software</a> </li>  
-							</ul> 
-							<ul> 
-								<li> <a target="_self" href="#">Indexes</a> </li> 
-								<li> <a target="_self" href="#">Newswires</a> </li>
-								<li> <a target="_self" href="#">Ag Solutions</a> </li>  
-							</ul>  
+								<li> <a [routerLink]="['/coinlist']" (click)="show=false">Coins List</a> </li> 
+								<li> <a target="_self" href="#">Coins New</a> </li> 
+							</ul>
 						</div>
-						<a class="company-info-close" href="javascript:closeMenu()"> <i class="bc-glyph-times"></i> </a> 
+						<a (click)="closeTopBar()" href="javascript:;" class="company-info-close"> <i class="bc-glyph-times"></i> </a> 
 					</div>
 				</div>
 			</div>
