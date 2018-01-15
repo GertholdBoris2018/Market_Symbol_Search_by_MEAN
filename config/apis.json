@@ -9,7 +9,7 @@
     },
     "getTickerCoin":{
         "method": "GET",
-        "url": "https://api.coinmarketcap.com/v1/ticker/?",
+        "url": "https://api.coinmarketcap.com/v1/ticker/?start=0&limit=0",
         "headers": {
             "Content-Type": "application/json"
         }
