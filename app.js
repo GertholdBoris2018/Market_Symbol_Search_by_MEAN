@@ -87,101 +87,110 @@ function getAllCoinTickers(){
 	});
 }
 //schedule tasks for get all coins
-var rule = schedule.scheduleJob("*/3 * * * *", function() {
-	console.log('Creating Schedule for Get Coin List...');
-	//get all existing coins from the database
-	getAllCoins();
-	request(apis_config_options.getCoins, function(err, response, body) {
-		var res = JSON.parse(body);
-		var result = res.Response;
-		if(result == "Success"){
-			
-			var datasJSON = res.Data;
-			var keys = Object.keys(datasJSON);
-			
-			for(var i = 0; i < keys.length ; i++){
-				var Symbol = datasJSON[keys[i]].Symbol;
-				//console.log(Symbol);
-				var picked =  stored_coins.filter(function(value){ return value.Symbol==Symbol;});
-				if(picked.length > 0){
-					//console.log(Symbol + ' now existing');
-				}
-				else{
-					var newCoin = new Coin();
-					newCoin.Name = datasJSON[keys[i]].Name;
-					newCoin.Symbol = Symbol;
-					newCoin.CoinName = datasJSON[keys[i]].CoinName;
-					newCoin.FullName = datasJSON[keys[i]].FullName;
-					newCoin.Algorithm = datasJSON[keys[i]].Algorithm;
-					newCoin.Url = datasJSON[keys[i]].Url;
-					newCoin.ImageUrl = apis_config_options.apiDomain + datasJSON[keys[i]].ImageUrl;
-					newCoin.ProofType = datasJSON[keys[i]].ProofType;
-					newCoin.FullyPreminded = datasJSON[keys[i]].FullyPreminded;
-					newCoin.TotalCoinSupply = datasJSON[keys[i]].TotalCoinSupply;
-					newCoin.PreMindedValue = datasJSON[keys[i]].PreMindedValue;
-					newCoin.TotalCoinsFreeFloat = datasJSON[keys[i]].TotalCoinsFreeFloat;
-					newCoin.Sponsored = datasJSON[keys[i]].Sponsored;
-					newCoin.AddedTimeStamp = Date.now();
-					//console.log(newCoin);
-					newCoin.save();
-				}
-				if(i == keys.length - 1){
-					getAllCoins();
-					console.log('Schedule for Get Coin List Done.');
-				}
-			}
-		}
-		
-	});
-});
+// var rule = schedule.scheduleJob("*/3 * * * *", function() {
+// 	console.log('Creating Schedule for Get Coin List...');
+// 	//get all existing coins from the database
+// 	getAllCoins();
+// 	request(apis_config_options.getCoins, function(err, response, body) {
+// 		if(typeof body !== 'undefined'){
+// 			var res = JSON.parse(body);
+// 			var result = res.Response;
+// 			if(result == "Success"){
+				
+// 				var datasJSON = res.Data;
+// 				var keys = Object.keys(datasJSON);
+				
+// 				for(var i = 0; i < keys.length ; i++){
+// 					var Symbol = datasJSON[keys[i]].Symbol;
+// 					//console.log(Symbol);
+// 					var picked =  stored_coins.filter(function(value){ return value.Symbol==Symbol;});
+// 					if(picked.length > 0){
+// 						//console.log(Symbol + ' now existing');
+// 					}
+// 					else{
+// 						var newCoin = new Coin();
+// 						newCoin.Name = datasJSON[keys[i]].Name;
+// 						newCoin.Symbol = Symbol;
+// 						newCoin.CoinName = datasJSON[keys[i]].CoinName;
+// 						newCoin.FullName = datasJSON[keys[i]].FullName;
+// 						newCoin.Algorithm = datasJSON[keys[i]].Algorithm;
+// 						newCoin.Url = datasJSON[keys[i]].Url;
+// 						newCoin.ImageUrl = apis_config_options.apiDomain + datasJSON[keys[i]].ImageUrl;
+// 						newCoin.ProofType = datasJSON[keys[i]].ProofType;
+// 						newCoin.FullyPreminded = datasJSON[keys[i]].FullyPreminded;
+// 						newCoin.TotalCoinSupply = datasJSON[keys[i]].TotalCoinSupply;
+// 						newCoin.PreMindedValue = datasJSON[keys[i]].PreMindedValue;
+// 						newCoin.TotalCoinsFreeFloat = datasJSON[keys[i]].TotalCoinsFreeFloat;
+// 						newCoin.Sponsored = datasJSON[keys[i]].Sponsored;
+// 						newCoin.AddedTimeStamp = Date.now();
+// 						//console.log(newCoin);
+// 						newCoin.save();
+// 					}
+// 					if(i == keys.length - 1){
+// 						getAllCoins();
+// 						console.log('Schedule for Get Coin List Done.');
+// 					}
+// 				}
+// 			}
+// 		}
+// 	});
+// });
 
 //schedule task for get ticker value per coin
-var rule = schedule.scheduleJob("*/1 * * * *", function() {
-	console.log('Creating Schedule for Get Coin Tickers Value...');
-	//get all existing coins from the database
-	getAllCoinTickers();
-	request(apis_config_options.getTickerCoin, function(err, response, body) {
+// var rule = schedule.scheduleJob("*/1 * * * *", function() {
+// 	console.log('Creating Schedule for Get Coin Tickers Value...');
+// 	//get all existing coins from the database
+// 	getAllCoinTickers();
+// 	request(apis_config_options.getTickerCoin, function(err, response, body) {
+// 			console.log(body);
+// 			var res = [];
+// 			try {
+// 				res = JSON.parse(body);
+// 			} catch (e) {
+// 				console.log(e);
+// 			}
+// 			if(res.length > 0){
+// 				res.forEach(function(item,idx,array){
+// 					var symbol = item.id;
+// 					var picked =  stored_coin_tickers.filter(function(value){ return value.coinName==symbol;});
 		
-		var res = JSON.parse(body);
-		res.forEach(function(item,idx,array){
-			var symbol = item.id;
-			var picked =  stored_coin_tickers.filter(function(value){ return value.coinName==symbol;});
-
-			var newCoin = new CoinTicker();
-			newCoin.coinName = item.id;
-			newCoin.name = item.name;
-			newCoin.symbol = item.symbol;
-			newCoin.rank = item.rank;
-			newCoin.price_usd = item.price_usd;
-			newCoin.price_btc = item.price_btc;
-			newCoin['24h_volume_usd'] = item['24h_volume_usd'];
-			newCoin['market_cap_usd'] = item['market_cap_usd'];
-			newCoin['available_supply'] = item['available_supply'];
-			newCoin['total_supply'] = item['total_supply'];
-			newCoin['max_supply'] = item['max_supply'];
-			newCoin['percent_change_1h'] = item['percent_change_1h'];
-			newCoin['percent_change_24h'] = item['percent_change_24h'];
-			newCoin['percent_change_7d'] = item['percent_change_7d'];
-			newCoin['last_updated'] = item['last_updated'];
-
-
-			if(picked.length > 0){
-				var query = { coinName : symbol };
-				var productToUpdate = {};
-				productToUpdate = Object.assign(productToUpdate, newCoin._doc);
-				delete productToUpdate._id;
-				CoinTicker.findOneAndUpdate(query, productToUpdate , function(err){
-					//if(err) console.log(err);
-				});
-			}
-			else{
-				newCoin.save();
-			}
-			if(idx === array.length - 1){
-				getAllCoinTickers();
-				console.log('Schedule for Get Coin Tickers Done.');
-			}
-		});
+// 					var newCoin = new CoinTicker();
+// 					newCoin.coinName = item.id;
+// 					newCoin.name = item.name;
+// 					newCoin.symbol = item.symbol;
+// 					newCoin.rank = item.rank;
+// 					newCoin.price_usd = item.price_usd;
+// 					newCoin.price_btc = item.price_btc;
+// 					newCoin['24h_volume_usd'] = item['24h_volume_usd'];
+// 					newCoin['market_cap_usd'] = item['market_cap_usd'];
+// 					newCoin['available_supply'] = item['available_supply'];
+// 					newCoin['total_supply'] = item['total_supply'];
+// 					newCoin['max_supply'] = item['max_supply'];
+// 					newCoin['percent_change_1h'] = item['percent_change_1h'];
+// 					newCoin['percent_change_24h'] = item['percent_change_24h'];
+// 					newCoin['percent_change_7d'] = item['percent_change_7d'];
+// 					newCoin['last_updated'] = item['last_updated'];
 		
-	});
-});
+		
+// 					if(picked.length > 0){
+// 						var query = { coinName : symbol };
+// 						var productToUpdate = {};
+// 						productToUpdate = Object.assign(productToUpdate, newCoin._doc);
+// 						delete productToUpdate._id;
+// 						CoinTicker.findOneAndUpdate(query, productToUpdate , function(err){
+// 							//if(err) console.log(err);
+// 						});
+// 					}
+// 					else{
+// 						newCoin.save();
+// 					}
+// 					if(idx === array.length - 1){
+// 						getAllCoinTickers();
+// 						console.log('Schedule for Get Coin Tickers Done.');
+// 					}
+// 				});
+// 			}
+			
+		
+// 	});
+// });

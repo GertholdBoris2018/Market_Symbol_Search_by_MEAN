@@ -67,8 +67,8 @@ The actual rendered columns are set as a property on the row definition" -->
 <!-- Coin Name Column -->
 <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-    <mat-cell *matCellDef="let row"><div class="s-s-{{row.coinName}} currency-logo-sprite left margin-right-5"></div>
-        <a class="currency-name-container" href="#">{{ row.coinName }}</a></mat-cell>
+    <mat-cell *matCellDef="let row"><div class="s-s-{{row.id}} currency-logo-sprite left margin-right-5"></div>
+        <a class="currency-name-container" href="#">{{ row.id }}</a></mat-cell>
 </ng-container>
 
 <!-- Ranking Column -->

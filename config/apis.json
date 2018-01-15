@@ -9,7 +9,14 @@
     },
     "getTickerCoin":{
         "method": "GET",
-        "url": "https://api.coinmarketcap.com/v1/ticker/?start=0&limit=0",
+        "url": "https://api.coinmarketcap.com/v1/ticker/?",
+        "headers": {
+            "Content-Type": "application/json"
+        }
+    },
+    "getCoinGlobal":{
+        "method": "GET",
+        "url": "https://files.coinmarketcap.com/generated/stats/global.json",
         "headers": {
             "Content-Type": "application/json"
         }

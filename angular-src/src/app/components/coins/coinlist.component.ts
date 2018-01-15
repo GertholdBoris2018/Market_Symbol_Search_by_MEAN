@@ -128,7 +128,7 @@ export class ExampleHttpDao {
     //send token with header
     const headers = new HttpHeaders().set('Authorization', token);
     const href = 'http://localhost:4000/coins/getAllTickers';
-    //const href = 'http://204.12.62.182:4000/coins/getAllTickers';
+    //const href = 'http://204.12.62.181:4000/coins/getAllTickers';
     const requestUrl = `${href}?sort=${sort}&order=${order}&page=${page + 1}`;
     //return this.http.get<CoinTickersAPI>(requestUrl,{ headers }); It does not allowed unauthorize token
     return this.http.get<CoinTickersAPI>(requestUrl);

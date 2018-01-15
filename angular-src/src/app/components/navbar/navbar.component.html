@@ -55,7 +55,7 @@
 		<div class="row no-print">
 			<div class="column small-12">
 				<div class="bc-logo">
-					<a target="_self" href="/"> <img src="https://d1l7hzv7igdihb.cloudfront.net/img/bc-logo.svg" alt="Barchart.com"> </a>
+					<a target="_self" href="/"  (click)="show=false"> <img src="https://d1l7hzv7igdihb.cloudfront.net/img/bc-logo.svg" alt="Barchart.com"> </a>
 				</div>
 				<a class="menu-icon right-off-canvas-toggle show-for-small-only no-print" data-trigger-event-on-click=""></a> 
 				<div class="bc-user-block show-for-medium-up" data-dropdown-id="mobile">
@@ -63,35 +63,35 @@
 								<a [routerLink]="['/']">Home</a>
 						</div> -->
 						<div class="bc-user-block__button-wrapper  nav navbar-nav navbar-left" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
-							<a [routerLink]="['/']" class="bc-user-block__button">
+							<a [routerLink]="['/']" class="bc-user-block__button" (click)="show=false">
 								<span class="glyphicon glyphicon-home"></span>
 								Home
 							</a>
 						</div>
 
 						<div class="bc-user-block__button-wrapper  nav navbar-nav navbar-left" *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
-							<a [routerLink]="['/dashboard']" class="bc-user-block__button">
+							<a [routerLink]="['/dashboard']" class="bc-user-block__button" (click)="show=false">
 								<span class="glyphicon glyphicon-dashboard"></span>
 								Dashboard
 							</a>
 						</div>
 
 						<div class="bc-user-block__button-wrapper  nav navbar-nav navbar-left" *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
-							<a [routerLink]="['/profile']" class="bc-user-block__button">
+							<a [routerLink]="['/profile']" class="bc-user-block__button" (click)="show=false">
 								<span class="glyphicon glyphicon-user"></span>
 								Profile
 							</a>
 						</div>
 
 						<div class="bc-user-block__button-wrapper  nav navbar-nav navbar-left" *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
-							<a [routerLink]="['/login']" class="bc-user-block__button">
+							<a [routerLink]="['/login']" class="bc-user-block__button" (click)="show=false">
 								<span class="glyphicon glyphicon-log-in"></span>
 								Login
 							</a>
 						</div>
 						
 						<div class="bc-user-block__button-wrapper  nav navbar-nav navbar-left" *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions] = "{exact:true}">
-							<a [routerLink]="['/register']" class="bc-user-block__button">
+							<a [routerLink]="['/register']" class="bc-user-block__button" (click)="show=false">
 								<span class="glyphicon glyphicon-user"></span>
 								Register
 							</a>
