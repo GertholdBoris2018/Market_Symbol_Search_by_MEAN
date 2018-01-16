@@ -44,8 +44,66 @@
     </tr>
     </tfoot>
 </table> -->
+<div class="filter-title">
+    <span class="filter-text">Filter</span>
+</div>
+<div class= "filter">
+    <table classs="table">
+            <tbody>
+                <tr>
+                    <td>
+                        <mat-form-field>
+                                <mat-select placeholder="Any">
+                                    <mat-option value="option">Under  $100</mat-option>
+                                    <mat-option value="option">Under  $200</mat-option>
+                                    <mat-option value="option">Under  $300</mat-option>
+                                    <mat-option value="option">Under  $500</mat-option>
+                                    <mat-option value="option">Under  $1000</mat-option>
+                                    <mat-option value="option">Under  $2000</mat-option>
+                                    <mat-option value="option">Under  $3000</mat-option>
+                                    <mat-option value="option">Under  $5000</mat-option>
+                                    <mat-option value="option">Under  $10000</mat-option>
+                                    <mat-option value="option">Under  $20000</mat-option>
+                                    <mat-option value="option">Over  $1</mat-option>
+                                    <mat-option value="option">Over  $100</mat-option>
+                                    <mat-option value="option">Over  $200</mat-option>
+                                    <mat-option value="option">Over  $300</mat-option>
+                                    <mat-option value="option">Over  $500</mat-option>
+                                    <mat-option value="option">Over  $1000</mat-option>
+                                    <mat-option value="option">Over  $2000</mat-option>
+                                    <mat-option value="option">Over  $3000</mat-option>
+                                    <mat-option value="option">Over  $5000</mat-option>
+                                    <mat-option value="option">Over  $10000</mat-option>
+                                    <mat-option value="option">$1  to  $100</mat-option>
+                                    <mat-option value="option">$100  to  $200</mat-option>
+                                    <mat-option value="option">$200  to  $300</mat-option>
+                                    <mat-option value="option">$300  to  $500</mat-option>
+                                    <mat-option value="option">$1000  to  $2000</mat-option>
+                                    <mat-option value="option">$2000  to  $3000</mat-option>
+                                    <mat-option value="option">$3000  to  $5000</mat-option>
+                                    <mat-option value="option">$5000  to  $10000</mat-option>
+                                    <mat-option value="option">$10000  to  $20000</mat-option>
+
+                                </mat-select>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field>
+                                <mat-select placeholder="Markets Volume">
+                                    <mat-option value="option">AnY</mat-option>
+                                </mat-select>
+                        </mat-form-field>
+                    </td>  
+        
+                </tr>
+            </tbody>
+    </table>
+
+</div>
+
 <mat-paginator [length]="resultsLength" [pageSize]="100">
 </mat-paginator>
+
 
 <mat-table #table [dataSource]="dataSource" class="example-table" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
 
@@ -55,6 +113,7 @@ The actual rendered columns are set as a property on the row definition" -->
 <!-- Market Cap Column -->
 <ng-container matColumnDef="market_cap">
     <mat-header-cell *matHeaderCellDef>Market Cap</mat-header-cell>
+    
     <mat-cell *matCellDef="let row">${{ row.market_cap_usd }}</mat-cell>
 </ng-container>
 
