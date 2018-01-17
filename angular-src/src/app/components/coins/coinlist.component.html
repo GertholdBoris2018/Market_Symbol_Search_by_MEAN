@@ -44,6 +44,8 @@
     </tr>
     </tfoot>
 </table> -->
+
+
 <div class="filter-title">
     <span class="filter-text">Filter</span>
 </div>
@@ -53,36 +55,37 @@
                 <tr>
                     <td>
                         <mat-form-field>
-                                <mat-select placeholder="Any">
-                                    <mat-option value="option">Under  $100</mat-option>
-                                    <mat-option value="option">Under  $200</mat-option>
-                                    <mat-option value="option">Under  $300</mat-option>
-                                    <mat-option value="option">Under  $500</mat-option>
-                                    <mat-option value="option">Under  $1000</mat-option>
-                                    <mat-option value="option">Under  $2000</mat-option>
-                                    <mat-option value="option">Under  $3000</mat-option>
-                                    <mat-option value="option">Under  $5000</mat-option>
-                                    <mat-option value="option">Under  $10000</mat-option>
-                                    <mat-option value="option">Under  $20000</mat-option>
-                                    <mat-option value="option">Over  $1</mat-option>
-                                    <mat-option value="option">Over  $100</mat-option>
-                                    <mat-option value="option">Over  $200</mat-option>
-                                    <mat-option value="option">Over  $300</mat-option>
-                                    <mat-option value="option">Over  $500</mat-option>
-                                    <mat-option value="option">Over  $1000</mat-option>
-                                    <mat-option value="option">Over  $2000</mat-option>
-                                    <mat-option value="option">Over  $3000</mat-option>
-                                    <mat-option value="option">Over  $5000</mat-option>
-                                    <mat-option value="option">Over  $10000</mat-option>
-                                    <mat-option value="option">$1  to  $100</mat-option>
-                                    <mat-option value="option">$100  to  $200</mat-option>
-                                    <mat-option value="option">$200  to  $300</mat-option>
-                                    <mat-option value="option">$300  to  $500</mat-option>
-                                    <mat-option value="option">$1000  to  $2000</mat-option>
-                                    <mat-option value="option">$2000  to  $3000</mat-option>
-                                    <mat-option value="option">$3000  to  $5000</mat-option>
-                                    <mat-option value="option">$5000  to  $10000</mat-option>
-                                    <mat-option value="option">$10000  to  $20000</mat-option>
+                                <mat-select placeholder="Price" [(ngModel)]="selectedPrice" (change)="onChange($event)">
+                                    <mat-option value="any">Any</mat-option>
+                                    <mat-option value="_100">Under  $100</mat-option>
+                                    <mat-option value="_200">Under  $200</mat-option>
+                                    <mat-option value="_300">Under  $300</mat-option>
+                                    <mat-option value="_500">Under  $500</mat-option>
+                                    <mat-option value="_1000">Under  $1000</mat-option>
+                                    <mat-option value="_2000">Under  $2000</mat-option>
+                                    <mat-option value="_3000">Under  $3000</mat-option>
+                                    <mat-option value="_5000">Under  $5000</mat-option>
+                                    <mat-option value="_10000">Under  $10000</mat-option>
+                                    <mat-option value="_20000">Under  $20000</mat-option>
+                                    <mat-option value="1_">Over  $1</mat-option>
+                                    <mat-option value="100_">Over  $100</mat-option>
+                                    <mat-option value="200_">Over  $200</mat-option>
+                                    <mat-option value="300_">Over  $300</mat-option>
+                                    <mat-option value="500_">Over  $500</mat-option>
+                                    <mat-option value="1000_">Over  $1000</mat-option>
+                                    <mat-option value="2000_">Over  $2000</mat-option>
+                                    <mat-option value="3000_">Over  $3000</mat-option>
+                                    <mat-option value="5000_">Over  $5000</mat-option>
+                                    <mat-option value="10000_">Over  $10000</mat-option>
+                                    <mat-option value="1_100">$1  to  $100</mat-option>
+                                    <mat-option value="100_200">$100  to  $200</mat-option>
+                                    <mat-option value="200_300">$200  to  $300</mat-option>
+                                    <mat-option value="300_500">$300  to  $500</mat-option>
+                                    <mat-option value="1000_2000">$1000  to  $2000</mat-option>
+                                    <mat-option value="2000_3000">$2000  to  $3000</mat-option>
+                                    <mat-option value="3000_5000">$3000  to  $5000</mat-option>
+                                    <mat-option value="5000_10000">$5000  to  $10000</mat-option>
+                                    <mat-option value="10000_20000">$10000  to  $20000</mat-option>
 
                                 </mat-select>
                         </mat-form-field>
@@ -92,6 +95,7 @@
                                 <mat-select placeholder="Markets Volume">
                                     <mat-option value="option">AnY</mat-option>
                                 </mat-select>
+                               
                         </mat-form-field>
                     </td>  
         
