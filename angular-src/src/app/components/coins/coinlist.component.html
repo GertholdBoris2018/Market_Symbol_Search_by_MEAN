@@ -55,51 +55,88 @@
                 <tr>
                     <td>
                         <mat-form-field>
-                                <mat-select placeholder="Price" [(ngModel)]="selectedPrice" (change)="onChange($event)">
-                                    <mat-option value="any">Any</mat-option>
-                                    <mat-option value="_100">Under  $100</mat-option>
-                                    <mat-option value="_200">Under  $200</mat-option>
-                                    <mat-option value="_300">Under  $300</mat-option>
-                                    <mat-option value="_500">Under  $500</mat-option>
-                                    <mat-option value="_1000">Under  $1000</mat-option>
-                                    <mat-option value="_2000">Under  $2000</mat-option>
-                                    <mat-option value="_3000">Under  $3000</mat-option>
-                                    <mat-option value="_5000">Under  $5000</mat-option>
-                                    <mat-option value="_10000">Under  $10000</mat-option>
-                                    <mat-option value="_20000">Under  $20000</mat-option>
-                                    <mat-option value="1_">Over  $1</mat-option>
-                                    <mat-option value="100_">Over  $100</mat-option>
-                                    <mat-option value="200_">Over  $200</mat-option>
-                                    <mat-option value="300_">Over  $300</mat-option>
-                                    <mat-option value="500_">Over  $500</mat-option>
-                                    <mat-option value="1000_">Over  $1000</mat-option>
-                                    <mat-option value="2000_">Over  $2000</mat-option>
-                                    <mat-option value="3000_">Over  $3000</mat-option>
-                                    <mat-option value="5000_">Over  $5000</mat-option>
-                                    <mat-option value="10000_">Over  $10000</mat-option>
-                                    <mat-option value="1_100">$1  to  $100</mat-option>
-                                    <mat-option value="100_200">$100  to  $200</mat-option>
-                                    <mat-option value="200_300">$200  to  $300</mat-option>
-                                    <mat-option value="300_500">$300  to  $500</mat-option>
-                                    <mat-option value="1000_2000">$1000  to  $2000</mat-option>
-                                    <mat-option value="2000_3000">$2000  to  $3000</mat-option>
-                                    <mat-option value="3000_5000">$3000  to  $5000</mat-option>
-                                    <mat-option value="5000_10000">$5000  to  $10000</mat-option>
-                                    <mat-option value="10000_20000">$10000  to  $20000</mat-option>
+                            <mat-select placeholder="Price" [(ngModel)]="selectedprice" (change)="onChange($event)">
+                                <mat-option value="_">Any</mat-option>
+                                <mat-option value="_100">Under  $100</mat-option>
+                                <mat-option value="_200">Under  $200</mat-option>
+                                <mat-option value="_300">Under  $300</mat-option>
+                                <mat-option value="_500">Under  $500</mat-option>
+                                <mat-option value="_1000">Under  $1000</mat-option>
+                                <mat-option value="_2000">Under  $2000</mat-option>
+                                <mat-option value="_3000">Under  $3000</mat-option>
+                                <mat-option value="_5000">Under  $5000</mat-option>
+                                <mat-option value="_10000">Under  $10000</mat-option>
+                                <mat-option value="_20000">Under  $20000</mat-option>
+                                <mat-option value="1_">Over  $1</mat-option>
+                                <mat-option value="100_">Over  $100</mat-option>
+                                <mat-option value="200_">Over  $200</mat-option>
+                                <mat-option value="300_">Over  $300</mat-option>
+                                <mat-option value="500_">Over  $500</mat-option>
+                                <mat-option value="1000_">Over  $1000</mat-option>
+                                <mat-option value="2000_">Over  $2000</mat-option>
+                                <mat-option value="3000_">Over  $3000</mat-option>
+                                <mat-option value="5000_">Over  $5000</mat-option>
+                                <mat-option value="10000_">Over  $10000</mat-option>
+                                <mat-option value="1_100">$1  to  $100</mat-option>
+                                <mat-option value="100_200">$100  to  $200</mat-option>
+                                <mat-option value="200_300">$200  to  $300</mat-option>
+                                <mat-option value="300_500">$300  to  $500</mat-option>
+                                <mat-option value="1000_2000">$1000  to  $2000</mat-option>
+                                <mat-option value="2000_3000">$2000  to  $3000</mat-option>
+                                <mat-option value="3000_5000">$3000  to  $5000</mat-option>
+                                <mat-option value="5000_10000">$5000  to  $10000</mat-option>
+                                <mat-option value="10000_20000">$10000  to  $20000</mat-option>
 
-                                </mat-select>
+                            </mat-select>
                         </mat-form-field>
                     </td>
                     <td>
                         <mat-form-field>
-                                <mat-select placeholder="Markets Volume">
-                                    <mat-option value="option">AnY</mat-option>
-                                </mat-select>
-                               
+                            <mat-select placeholder="MarketCap"[(ngModel)]="selectedmarket" (change)="onChange($event)">
+                                <mat-option value="_">Any</mat-option>
+                                <mat-option value="200000000000_">Mega($200bln and more)</mat-option>
+                                <mat-option value="10000000000_200000000000">Large($10bln to $200bln)</mat-option>
+                                <mat-option value="2000000000_10000000000">Mid($2bln to 10bln)</mat-option>
+                                <mat-option value="300000000_2000000000">Small($300mln to 2bln)</mat-option>
+                                <mat-option value="50000000_300000000">Micro($50mln to 300mln)</mat-option>
+                                <mat-option value="10000000000_">+Large(over $10bln)</mat-option>
+                                <mat-option value="2000000000_">+Mid(over $2bln)</mat-option>
+                                <mat-option value="300000000_">+Small(over $300mln)</mat-option>
+                                <mat-option value="50000000_">+Micor(over $50mln)</mat-option>
+                                <mat-option value="_200000000000">-Large(under $200bln)</mat-option>
+                                <mat-option value="_10000000000">-Mid(under $10bln)</mat-option>
+                                <mat-option value="_2000000000">-Small(under $2bln)</mat-option>
+                                <mat-option value="_300000000">-Micro(under $300mln)</mat-option>
+                            </mat-select>
                         </mat-form-field>
-                    </td>  
-        
+                    </td>
+                    <td>
+                        <mat-form-field>
+                            <mat-select placeholder="Volumn(24h)" [(ngModel)]="selectedvolumn" (change)="onChange($event)">
+                                <mat-option value="_">Any</mat-option>
+                                <mat-option value="_50000">Under  50k</mat-option>
+                                <mat-option value="_100000">Under  100k</mat-option>
+                                <mat-option value="_500000">Under  500k</mat-option>
+                                <mat-option value="_750000">Under  750k</mat-option>
+                                <mat-option value="_1000000">Under  1M</mat-option>
+                                <mat-option value="0_">Over  0</mat-option>
+                                <mat-option value="50000_">Over 50k</mat-option>
+                                <mat-option value="100000_">Over 100k</mat-option>
+                                <mat-option value="200000_">Over 200k</mat-option>
+                                <mat-option value="300000_">Over 300k</mat-option>
+                                <mat-option value="400000_">Over 400k</mat-option>
+                                <mat-option value="500000_">Over 500k</mat-option>
+                                <mat-option value="750000_">Over 750k</mat-option>
+                                <mat-option value="1000000_">Over  1M</mat-option>
+                                <mat-option value="2000000_">Over  2M</mat-option>
+                                <mat-option value="5000000_">Over  5M</mat-option>
+                                <mat-option value="10000000_">Over  10M</mat-option>
+                                <mat-option value="20000000_">Over  20M</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
                 </tr>
+
             </tbody>
     </table>
 

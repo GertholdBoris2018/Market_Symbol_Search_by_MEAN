@@ -8,7 +8,12 @@
   }
 
   tr > td {
-      padding-right: 10px !important;
+      padding-right: 60px !important;
+      padding-left: 39px !important;
+  }
+
+  tbody > tr {
+      height:62px !important;
   }
   .filter{
       width:100%;

@@ -32,7 +32,9 @@ export class CoinListComponent implements OnInit {
   ticks = 0;
   private timer;
   private sub: Subscription;
-  selectedPrice: string;
+  selectedprice: string;
+  selectedmarket : string;
+  selectedvolumn : string;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -46,7 +48,9 @@ export class CoinListComponent implements OnInit {
 
   ngOnInit() {
     this.exampleDatabase = new ExampleHttpDao(this.http);
-    this.selectedPrice = "any";
+    this.selectedprice = "";
+    this.selectedmarket = "";
+    this.selectedvolumn = "";
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     this.timer = Observable.timer(2000,5000);
@@ -59,9 +63,9 @@ export class CoinListComponent implements OnInit {
         switchMap(() => {
           this.isLoadingResults = true;
           //get price filtering value
-          console.log('selected price is ' + this.selectedPrice);
+          console.log('selected price is ' + this.selectedprice);
           return this.exampleDatabase!.getRepoIssues(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex, this.selectedPrice);
+            this.sort.active, this.sort.direction, this.paginator.pageIndex, this.selectedprice, this.selectedmarket, this.selectedvolumn);
         }),
         map(data => {
           // Flip flag to show that loading has finished.
@@ -88,22 +92,6 @@ export class CoinListComponent implements OnInit {
 
   onChange(event)
   {
-    let pVal = event.value;
-    let pStrVal = pVal.split("_");
-    // alert(pStrVal[0]);
-    // alert(pStrVal[1]);
-    if(pVal == "any"){
-      //display all fields
-    }
-    else if(pStrVal[0] == ""){
-      //display fields for under the price
-    }
-    else if(pStrVal[1] == ""){
-      //display fields for over the price
-    }
-    else{
-      //display fields for between the price
-    }
     this.paginator.pageIndex = 0;
   }
 }
@@ -139,7 +127,7 @@ export interface CoinTicker {
 export class ExampleHttpDao {
   constructor(private http: HttpClient ) {}
 
-  getRepoIssues(sort: string, order: string, page: number, priceFilter: string): Observable<CoinTickersAPI> {
+  getRepoIssues(sort: string, order: string, page: number, priceFilter: string, marketFilter: string, volumnFilter: string): Observable<CoinTickersAPI> {
 
     // const href = 'https://api.github.com/search/issues';
     // const requestUrl =
@@ -153,7 +141,7 @@ export class ExampleHttpDao {
     const headers = new HttpHeaders().set('Authorization', token);
     const href = 'http://localhost:4000/coins/getAllTickers';
     //const href = 'http://204.12.62.181:4000/coins/getAllTickers';
-    const requestUrl = `${href}?sort=${sort}&order=${order}&page=${page + 1}&pFilter=${priceFilter}`;
+    const requestUrl = `${href}?sort=${sort}&order=${order}&page=${page + 1}&pFilter=${priceFilter}&mFilter=${marketFilter}&vFilter=${volumnFilter}`;
     //return this.http.get<CoinTickersAPI>(requestUrl,{ headers }); It does not allowed unauthorize token
     return this.http.get<CoinTickersAPI>(requestUrl);
   }
