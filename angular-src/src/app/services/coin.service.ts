@@ -15,8 +15,6 @@ export class CoinService {
 		headers.append('Authorization', token);
 
 		headers.append('Content-Type','application/json');
-		// return this.http.get('http://204.12.62.181:4000/coins/getAllTickers', {headers: headers})
-		// 	.map(res => res.json());
 		return this.http.get(serverUrl + 'coins/getAllTickers', {headers: headers})
 		.map(res => res.json());
 	}

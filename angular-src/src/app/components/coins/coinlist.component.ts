@@ -23,7 +23,10 @@ import { serverUrl } from 'app/config/globals';
 })
 export class CoinListComponent implements OnInit {
 
-  displayedColumns = ['#', 'name', 'market_cap', 'price','volumn24h','supplies','change1h','change24h','change7d'];
+  displayedColumns = [
+    '#', 'name', 'market_cap',
+    'price','volumn24h','supplies','change1h',
+    'change24h','change7d'];
   exampleDatabase: ExampleHttpDao | null;
   dataSource = new MatTableDataSource();
 
@@ -53,7 +56,7 @@ export class CoinListComponent implements OnInit {
     this.selectedprice = "_";
     this.selectedmarket = "_";
     this.selectedvolumn = "_";
-    this.selectedcirculate = "_"
+    this.selectedcirculate = "_";
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     this.timer = Observable.timer(2000,5000);
