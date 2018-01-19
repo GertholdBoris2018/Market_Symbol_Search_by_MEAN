@@ -20,37 +20,46 @@ const CoinTickerSchema = mongoose.Schema({
 		type: Number,
 		required: true
     },
-    'price_usd' : {
+    'usd' : {
         type: Number
     },
-    'price_btc' : {
+    'btc' : {
         type: Number
     },
-    '24h_volume_usd' : {
+    'vlm' : {
         type: Number
     },
-    'market_cap_usd': {
+    'cap': {
         type: Number
     },
-    'available_supply': {
+    'p_1h': {
         type: Number
     },
-    'total_supply': {
-        type:Number
-    },
-    'max_supply': {
+    'p_7d': {
         type: Number
     },
-    'percent_change_1h': {
+    'p_24h': {
         type: Number
     },
-    'percent_change_24h': {
+    'p_1M': {
         type: Number
     },
-    'percent_change_7d':{
+    'p_6M': {
         type: Number
     },
-    'last_updated':{
+    'since_ts':{
+        type: Number
+    },
+    '52w_l' : {
+        type: Number
+    },
+    '52w_h' : {
+        type: Number
+    },
+    'token' : {
+        type: String
+    },
+    'suppies':{
         type: Number
     }
 });

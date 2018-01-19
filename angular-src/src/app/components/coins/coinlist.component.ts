@@ -25,8 +25,8 @@ export class CoinListComponent implements OnInit {
 
   displayedColumns = [
     '#', 'name', 'market_cap',
-    'price','volumn24h','supplies','change1h',
-    'change24h','change7d'];
+    'price','volume24h','supplies','change1h',
+    'change24h','change7d','change1M','change6M'];
   exampleDatabase: ExampleHttpDao | null;
   dataSource = new MatTableDataSource();
 
@@ -69,7 +69,6 @@ export class CoinListComponent implements OnInit {
         switchMap(() => {
           this.isLoadingResults = true;
           //get price filtering value
-          console.log('selected price is ' + this.selectedprice);
           return this.exampleDatabase!.getRepoIssues(
             this.sort.active, this.sort.direction, this.paginator.pageIndex, this.selectedprice, this.selectedmarket, this.selectedvolumn, this.selectedcirculate);
         }),
@@ -78,7 +77,6 @@ export class CoinListComponent implements OnInit {
           this.isLoadingResults = false;
           this.isRateLimitReached = false;
           this.resultsLength = data.total_count;
-
           return data.items;
         }),
         catchError(() => {
@@ -87,7 +85,12 @@ export class CoinListComponent implements OnInit {
           this.isRateLimitReached = true;
           return observableOf([]);
         })
-      ).subscribe(data => this.dataSource.data = data);
+      ).subscribe(data => 
+        {
+          this.dataSource.data = data
+        }
+        
+      );
   }
 
   tickerFunc(tick){
@@ -112,21 +115,19 @@ export interface CoinTicker {
   'name': string;
   'symbol': string;
   'rank' : number;
-  'price_usd': number;
-  'price_btc': number;
-  '24h_volume_usd': number;
-  'market_cap_usd' : number;
-  'available_supply': number;
-  'total_supply' : number;
-  'max_supply' : number;
-  'percent_change_1h' : number;
-  'percent_change_24h' : number;
-  'percent_change_7d' : number;
-  'last_updated' : number;
-  // created_at: string;
-  // number: string;
-  // state: string;
-  // title: string;
+  'usd': number;
+  'btc': number;
+  'vlm': number;
+  'cap' : number;
+  'since_ts': number;
+  'p_1h' : number;
+  'p_24h' : number;
+  'p_7d' : number;
+  'token' : number;
+  '52w_l' : number;
+  '52w_h' : number;
+  'p_1M' : number;
+  'p_6M' : number;
 }
 
 /** An example database that the data source uses to retrieve data for the table. */

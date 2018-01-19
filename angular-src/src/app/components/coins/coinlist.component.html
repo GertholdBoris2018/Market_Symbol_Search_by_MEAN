@@ -173,26 +173,6 @@
 <!--- Note that these columns can be defined in any order.
 The actual rendered columns are set as a property on the row definition" -->
 
-<!-- Market Cap Column -->
-<ng-container matColumnDef="market_cap">
-    <mat-header-cell *matHeaderCellDef>Market Cap</mat-header-cell>
-    
-    <mat-cell *matCellDef="let row">${{ row.market_cap_usd }}</mat-cell>
-</ng-container>
-
-<!-- Price for USD Column -->
-<ng-container matColumnDef="price">
-    <mat-header-cell *matHeaderCellDef>Price</mat-header-cell>
-    <mat-cell *matCellDef="let row">${{ row.price_usd }}</mat-cell>
-</ng-container>
-
-<!-- Coin Name Column -->
-<ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-    <mat-cell *matCellDef="let row"><div class="s-s-{{row.coinName}} currency-logo-sprite left margin-right-5"></div>
-        <a class="currency-name-container" href="#">{{ row.coinName }}</a></mat-cell>
-</ng-container>
-
 <!-- Ranking Column -->
 <ng-container matColumnDef="#">
     <mat-header-cell *matHeaderCellDef disableClear="true">
@@ -201,34 +181,69 @@ The actual rendered columns are set as a property on the row definition" -->
     <mat-cell *matCellDef="let row">{{ row.rank }}</mat-cell>
 </ng-container>
 
+<!-- Coin Name Column -->
+<ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+    <mat-cell *matCellDef="let row"><div class="s-s-{{row.coinName}} currency-logo-sprite left margin-right-5 margin-top-5"></div>
+        <a class="currency-name-container" href="#">{{ row.symbol }}</a>
+        <div style="font-size: 12px; padding-left: 26px; color: rgb(134, 142, 150);">{{ row.name }}</div>
+    </mat-cell>
+</ng-container>
+
+<!-- Market Cap Column -->
+<ng-container matColumnDef="market_cap">
+    <mat-header-cell *matHeaderCellDef [ngClass]="'cellright'">Market Cap</mat-header-cell>
+    <mat-cell *matCellDef="let row" [ngClass]="'cellright'">${{ row.cap }}</mat-cell>
+</ng-container>
+
+<!-- Price for USD Column -->
+<ng-container matColumnDef="price">
+    <mat-header-cell *matHeaderCellDef [ngClass]="'cellright'">Price</mat-header-cell>
+    <mat-cell *matCellDef="let row" [ngClass]="'cellright'">${{ row.usd }}</mat-cell>
+</ng-container>
+
+
+
 <!-- Volumn 24h Column -->
-<ng-container matColumnDef="volumn24h">
-    <mat-header-cell *matHeaderCellDef>Volumn(24h)</mat-header-cell>
-    <mat-cell *matCellDef="let row">${{ row['24h_volume_usd'] }}</mat-cell>
+<ng-container matColumnDef="volume24h">
+    <mat-header-cell *matHeaderCellDef [ngClass]="'cellright'">Volume(24h)</mat-header-cell>
+    <mat-cell *matCellDef="let row" [ngClass]="'cellright'">${{ row['vlm'] }}</mat-cell>
 </ng-container>
 
 <!-- Circulating Supply Column -->
 <ng-container matColumnDef="supplies">
-    <mat-header-cell *matHeaderCellDef>Circulating Supply</mat-header-cell>
-    <mat-cell *matCellDef="let row">${{ row['available_supply'] }}</mat-cell>
+    <mat-header-cell *matHeaderCellDef [ngClass]="'cellright'">Circulating Supply</mat-header-cell>
+    <mat-cell *matCellDef="let row" [ngClass]="'cellright'">{{ row['suppies'] }}</mat-cell>
 </ng-container>
 
 <!-- Change(24) Column -->
 <ng-container matColumnDef="change24h">
-    <mat-header-cell *matHeaderCellDef>% 24h</mat-header-cell>
-    <mat-cell *matCellDef="let row"><span class="{{row['percent_change_24h']<0? 'red':'green'}}">${{ row['percent_change_24h'] }} % </span></mat-cell>
+    <mat-header-cell *matHeaderCellDef [ngClass] = "'ctmWidth'" >%(24h)</mat-header-cell>
+    <mat-cell *matCellDef="let row" [ngClass] = "'ctmWidth'"><span class="{{row['p_24h']<0? 'red':'green'}}">${{ row['p_24h'] }} % </span></mat-cell>
 </ng-container>
 
 <!-- Change(1h) Column -->
 <ng-container matColumnDef="change1h">
-    <mat-header-cell *matHeaderCellDef>% 1h</mat-header-cell>
-    <mat-cell *matCellDef="let row"><span class="{{row['percent_change_1h']<0? 'red':'green'}}">${{ row['percent_change_1h'] }} % </span></mat-cell>
+    <mat-header-cell *matHeaderCellDef [ngClass] = "'ctmWidth'" >%(1h)</mat-header-cell>
+    <mat-cell *matCellDef="let row"[ngClass] = "'ctmWidth'"><span class="{{row['p_1h']<0? 'red':'green'}}">${{ row['p_1h'] }} % </span></mat-cell>
 </ng-container>
 
 <!-- Change(7d) Column -->
 <ng-container matColumnDef="change7d">
-    <mat-header-cell *matHeaderCellDef>% 7d</mat-header-cell>
-    <mat-cell *matCellDef="let row"><span class="{{row['percent_change_7d']<0? 'red':'green'}}">${{ row['percent_change_7d'] }} % </span></mat-cell>
+    <mat-header-cell *matHeaderCellDef [ngClass] = "'ctmWidth'" >%(7d)</mat-header-cell>
+    <mat-cell *matCellDef="let row" [ngClass] = "'ctmWidth'"><span class="{{row['p_7d']<0? 'red':'green'}}">${{ row['p_7d'] }} % </span></mat-cell>
+</ng-container>
+
+<!-- Change(1M) Column -->
+<ng-container matColumnDef="change1M">
+    <mat-header-cell *matHeaderCellDef [ngClass] = "'ctmWidth'" >%(1M)</mat-header-cell>
+    <mat-cell *matCellDef="let row" [ngClass] = "'ctmWidth'"><span class="{{row['p_1M']<0? 'red':'green'}}">${{ row['p_1M'] }} % </span></mat-cell>
+</ng-container>
+
+<!-- Change(7d) Column -->
+<ng-container matColumnDef="change6M">
+    <mat-header-cell *matHeaderCellDef [ngClass] = "'ctmWidth'" >%(6M)</mat-header-cell>
+    <mat-cell *matCellDef="let row" [ngClass] = "'ctmWidth'"><span class="{{row['p_6M']<0? 'red':'green'}}">${{ row['p_6M'] }} % </span></mat-cell>
 </ng-container>
 
 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

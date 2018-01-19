@@ -20,5 +20,12 @@
         "headers": {
             "Content-Type": "application/json"
         }
+    },
+    "getBitScreeners":{
+        "method": "GET",
+        "url": "https://api.bitscreener.com/api/v1/coins",
+        "headers": {
+            "Content-Type": "application/json"
+        }
     }
 }
