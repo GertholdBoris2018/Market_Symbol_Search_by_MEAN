@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Http, Headers} from '@angular/http';
+import { serverUrl } from 'app/config/globals';
 @Injectable()
 export class CoinService {
 
@@ -16,7 +17,7 @@ export class CoinService {
 		headers.append('Content-Type','application/json');
 		// return this.http.get('http://204.12.62.181:4000/coins/getAllTickers', {headers: headers})
 		// 	.map(res => res.json());
-		return this.http.get('http://localhost:4000/coins/getAllTickers', {headers: headers})
+		return this.http.get(serverUrl + 'coins/getAllTickers', {headers: headers})
 		.map(res => res.json());
 	}
 

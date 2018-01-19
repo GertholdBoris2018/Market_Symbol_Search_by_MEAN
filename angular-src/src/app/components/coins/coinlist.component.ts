@@ -15,6 +15,7 @@ import {startWith} from 'rxjs/operators/startWith';
 import {switchMap} from 'rxjs/operators/switchMap';
 //import { HttpHeaders } from '@angular/common/http/src/headers';
 import { Observable, Subscription } from 'rxjs/Rx';
+import { serverUrl } from 'app/config/globals';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './coinlist.component.html',
@@ -48,9 +49,9 @@ export class CoinListComponent implements OnInit {
 
   ngOnInit() {
     this.exampleDatabase = new ExampleHttpDao(this.http);
-    this.selectedprice = "";
-    this.selectedmarket = "";
-    this.selectedvolumn = "";
+    this.selectedprice = "_";
+    this.selectedmarket = "_";
+    this.selectedvolumn = "_";
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     this.timer = Observable.timer(2000,5000);
@@ -139,8 +140,7 @@ export class ExampleHttpDao {
     let token =  localStorage.getItem('id_token');
     //send token with header
     const headers = new HttpHeaders().set('Authorization', token);
-    const href = 'http://localhost:4000/coins/getAllTickers';
-    //const href = 'http://204.12.62.181:4000/coins/getAllTickers';
+    const href = serverUrl + 'coins/getAllTickers';
     const requestUrl = `${href}?sort=${sort}&order=${order}&page=${page + 1}&pFilter=${priceFilter}&mFilter=${marketFilter}&vFilter=${volumnFilter}`;
     //return this.http.get<CoinTickersAPI>(requestUrl,{ headers }); It does not allowed unauthorize token
     return this.http.get<CoinTickersAPI>(requestUrl);
