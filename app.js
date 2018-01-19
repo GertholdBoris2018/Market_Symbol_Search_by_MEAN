@@ -76,7 +76,7 @@ var stored_coins = [];
 function getAllCoins(){
 	Coin.find({},'Symbol -_id', function(err,coins){
 		stored_coins = coins;
-		//console.log(coins);
+		console.log(coins);
 	});
 }
 var stored_coin_tickers = [];
@@ -85,6 +85,7 @@ function getAllCoinTickers(){
 		stored_coin_tickers = coints;
 		//console.log(coins);
 	});
+	
 }
 //schedule tasks for get all coins
 // var rule = schedule.scheduleJob("*/3 * * * *", function() {
@@ -137,12 +138,13 @@ function getAllCoinTickers(){
 // });
 
 //schedule task for get ticker value per coin
+
 var rule = schedule.scheduleJob("*/1 * * * *", function() {
 	console.log('Creating Schedule for Get Coin Tickers Value...');
 	//get all existing coins from the database
 	getAllCoinTickers();
 	request(apis_config_options.getTickerCoin, function(err, response, body) {
-			console.log(body);
+			//console.log(body);
 			var res = [];
 			try {
 				res = JSON.parse(body);
@@ -159,10 +161,10 @@ var rule = schedule.scheduleJob("*/1 * * * *", function() {
 					newCoin.name = item.name;
 					newCoin.symbol = item.symbol;
 					newCoin.rank = item.rank;
-					newCoin.price_usd = item.price_usd;
+					newCoin.price_usd = item['price_usd'] != null ? item['price_usd']: 0;
 					newCoin.price_btc = item.price_btc;
-					newCoin['24h_volume_usd'] = item['24h_volume_usd'];
-					newCoin['market_cap_usd'] = item['market_cap_usd'];
+					newCoin['24h_volume_usd'] = item['24h_volume_usd'] != null ? item['24h_volume_usd']: 0;
+					newCoin['market_cap_usd'] = item['market_cap_usd'] != null ? item['market_cap_usd']: 0;
 					newCoin['available_supply'] = item['available_supply'];
 					newCoin['total_supply'] = item['total_supply'];
 					newCoin['max_supply'] = item['max_supply'];
