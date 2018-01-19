@@ -45,10 +45,6 @@
     </tfoot>
 </table> -->
 
-
-<div class="filter-title">
-    <span class="filter-text">Filter</span>
-</div>
 <div class= "filter">
     <table classs="table">
             <tbody>
@@ -135,6 +131,32 @@
                             </mat-select>
                         </mat-form-field>
                     </td>
+                    <td>
+                        <mat-form-field>
+                            <mat-select placeholder="Circulating Supply" [(ngModel)]="selectedcirculate" (change)="onChange($event)">
+                                <mat-option value="_">Any</mat-option>
+                                <mat-option value="_1000000">Under 1mil</mat-option>
+                                <mat-option value="_750000">Under  750k</mat-option>
+                                <mat-option value="_500000">Under  500k</mat-option>
+                                <mat-option value="_100000">Under  100k</mat-option>
+                                <mat-option value="_1000">Under  1k</mat-option>
+                                <mat-option value="0_">Over  0</mat-option>
+                                <mat-option value="50000_">Over 50k</mat-option>
+                                <mat-option value="100000_">Over 100k</mat-option>
+                                <mat-option value="200000_">Over 200k</mat-option>
+                                <mat-option value="500000_">Over 500k</mat-option>
+                                <mat-option value="750000_">Over 750k</mat-option>
+                                <mat-option value="1000000_">Over  1M</mat-option>
+                                <mat-option value="5000000_">Over  5M</mat-option>
+                                <mat-option value="20000000_">Over  20M</mat-option>
+                                <mat-option value="1000000_10000000">$1mil  to  $10mil</mat-option>
+                                <mat-option value="500000_1000000">$500k  to  $1mil</mat-option>
+                                <mat-option value="100000_500000">$100k  to  $500k</mat-option>
+                                <mat-option value="10000_100000">$10k  to  $100k</mat-option>
+                                <mat-option value="1000_10000">$1k  to  $10k</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
                 </tr>
 
             </tbody>
@@ -188,7 +210,7 @@ The actual rendered columns are set as a property on the row definition" -->
 <!-- Circulating Supply Column -->
 <ng-container matColumnDef="supplies">
     <mat-header-cell *matHeaderCellDef>Circulating Supply</mat-header-cell>
-    <mat-cell *matCellDef="let row">${{ row['total_supply'] }}</mat-cell>
+    <mat-cell *matCellDef="let row">${{ row['available_supply'] }}</mat-cell>
 </ng-container>
 
 <!-- Change(24) Column -->

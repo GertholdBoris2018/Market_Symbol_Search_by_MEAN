@@ -57,6 +57,11 @@ router.get('/getAllTickers', (req, res, next) => {
     var vStr = vFilter.split("_");
     var vfilLow, vfilHigh;
     var maxvolumn = -1;
+
+    var cFilter = req.query.cFilter;
+    var cStr = cFilter.split("_");
+    var cfilLow, cfilHigh;
+    var maxcirculate = -1;
     
     CoinTicker.find({},null,{sort:{price_usd: -1}, limit:1}, function(err, max){
         //get Max Price
@@ -77,15 +82,27 @@ router.get('/getAllTickers', (req, res, next) => {
                 vfilLow = !vStr[0] ? 0 : vStr[0];
                 vfilHigh = !vStr[1] ? maxvolumn : vStr[1];
 
-                CoinTicker.find({$and : [{price_usd:{ $gte: pfilLow, $lte : pfilHigh }}, {market_cap_usd:{ $gte : mfilLow, $lte : mfilHigh }}, {'24h_volume_usd':{ $gte : vfilLow, $lte : vfilHigh }}]},null,{sort:{rank: 'ascending'}}, function(err,coins){
-                    
-                    var cnt_all = coins.length;
-                    CoinTicker.find({$and : [{price_usd:{ $gte: pfilLow, $lte: pfilHigh }}, {market_cap_usd:{ $gte : mfilLow, $lte : mfilHigh }}, {'24h_volume_usd':{ $gte : vfilLow, $lte : vfilHigh }}]},null,{sort:{rank: 'ascending'},limit:100, skip: (page - 1) * 100}, function(err,coins){
+                CoinTicker.find({},null,{sort:{available_supply: -1}, limit:1}, function(err, max){
+                    //get Max Market
+                    maxcirculate = max[0].available_supply;
+                    console.log("maxcirculate =" + maxcirculate)
+                    cfilLow = !cStr[0] ? 0 : cStr[0];
+                    cfilHigh = !cStr[1] ? maxcirculate : cStr[1];
+                    console.log("pfilLow : " + pfilLow + ", pfilHigh :" + pfilHigh);
+                    console.log("mfilLow : " + mfilLow + ", mfilHigh :" + mfilHigh);
+                    console.log("vfilLow : " + vfilLow + ", vfilHigh :" + vfilHigh);
+                    console.log("cFillow : " + cfilLow + ", cFilHigh :" + cfilHigh);
+
+                    CoinTicker.find({$and : [{price_usd:{ $gte: pfilLow, $lte : pfilHigh }}, {market_cap_usd:{ $gte : mfilLow, $lte : mfilHigh }}, {'24h_volume_usd':{ $gte : vfilLow, $lte : vfilHigh }}, {available_supply:{ $gte : cfilLow, $lte : cfilHigh }}]},null,{sort:{rank: 'ascending'}}, function(err,coins){
                         
-                        if(err) res.json({msg:'error',data:err});
-                        res.json({total_count : cnt_all, items : coins});
+                        var cnt_all = coins.length;
+                        CoinTicker.find({$and : [{price_usd:{ $gte: pfilLow, $lte: pfilHigh }}, {market_cap_usd:{ $gte : mfilLow, $lte : mfilHigh }}, {'24h_volume_usd':{ $gte : vfilLow, $lte : vfilHigh }}, {available_supply:{ $gte : cfilLow, $lte : cfilHigh }}]},null,{sort:{rank: 'ascending'},limit:100, skip: (page - 1) * 100}, function(err,coins){
+                            
+                            if(err) res.json({msg:'error',data:err});
+                            res.json({total_count : cnt_all, items : coins});
+                        });
                     });
-                });
+                });   
             });
         });
     });

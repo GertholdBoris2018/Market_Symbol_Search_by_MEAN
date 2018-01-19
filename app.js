@@ -165,7 +165,7 @@ var rule = schedule.scheduleJob("*/1 * * * *", function() {
 					newCoin.price_btc = item.price_btc;
 					newCoin['24h_volume_usd'] = item['24h_volume_usd'] != null ? item['24h_volume_usd']: 0;
 					newCoin['market_cap_usd'] = item['market_cap_usd'] != null ? item['market_cap_usd']: 0;
-					newCoin['available_supply'] = item['available_supply'];
+					newCoin['available_supply'] = item['available_supply'] != null ? item['available_supply']:0;
 					newCoin['total_supply'] = item['total_supply'];
 					newCoin['max_supply'] = item['max_supply'];
 					newCoin['percent_change_1h'] = item['percent_change_1h'];
