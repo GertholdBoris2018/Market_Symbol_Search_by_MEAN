@@ -161,7 +161,7 @@
                 <tr>
                     <td>
                         <mat-form-field>
-                            <mat-select placeholder="Age" [(ngModel)]="selectedage" (change)="onChange($event)">
+                            <mat-select placeholder="Ages" [(ngModel)]="selectedage" (change)="onChange($event)">
                                 <mat-option value="_">Any</mat-option>
                                 <mat-option value="_259200000">Under  3 days</mat-option>
                                 <mat-option value="_604800000">Under  1 weeks</mat-option>
@@ -193,53 +193,75 @@
                     </td>
                     <td>
                         <mat-form-field>
-                            <mat-select placeholder="Performance" [(ngModel)]="selectedPerfo" (change)="onChange($event)">
-                                <mat-option value="_">Any</mat-option>
-                                <mat-option value="20_1h">1h: Over +20%</mat-option>
-                                <mat-option value="10_1h">1h: Over +10%</mat-option>
-                                <mat-option value="5_1h">1h: Over +5%</mat-option>
-                                <mat-option value="0_1h">1h: Over +0%</mat-option>
-                                <mat-option value="1h_20">1h: Under +20%</mat-option>
-                                <mat-option value="1h_10">1h: Under +10%</mat-option>
-                                <mat-option value="1h_5">1h: Under +5%</mat-option>
-                                <mat-option value="1h_0">1h: Under +0%</mat-option>
-                                <mat-option value="20_24h">24h: Over +20%</mat-option>
-                                <mat-option value="10_24h">24h: Over +10%</mat-option>
-                                <mat-option value="5_24h">24h: Over +5%</mat-option>
-                                <mat-option value="0_24h">24h: Over +0%</mat-option>
-                                <mat-option value="24h_20">24h: Under +20%</mat-option>
-                                <mat-option value="24h_10">24h: Under +10%</mat-option>
-                                <mat-option value="24h_5">24h: Under +5%</mat-option>
-                                <mat-option value="24h_0">24h: Under +0%</mat-option>
-                                <mat-option value="20_1w">1week: Over +20%</mat-option>
-                                <mat-option value="10_1w">1week: Over +10%</mat-option>
-                                <mat-option value="5_1w">1week: Over +5%</mat-option>
-                                <mat-option value="0_1w">1week: Over +0%</mat-option>
-                                <mat-option value="1w_20">1week: Under +20%</mat-option>
-                                <mat-option value="1w_10">1week: Under +10%</mat-option>
-                                <mat-option value="1w_5">1week: Under +5%</mat-option>
-                                <mat-option value="1w_0">1week: Under +0%</mat-option>
-                                <mat-option value="20_1m">1Month: Over +20%</mat-option>
-                                <mat-option value="10_1m">1Month: Over +10%</mat-option>
-                                <mat-option value="5_1m">1Month: Over +5%</mat-option>
-                                <mat-option value="0_1m">1Month: Over +0%</mat-option>
-                                <mat-option value="1m_20">1Month: Under +20%</mat-option>
-                                <mat-option value="1m_10">1Month: Under +10%</mat-option>
-                                <mat-option value="1m_5">1Month: Under +5%</mat-option>
-                                <mat-option value="1m_0">1Month: Under +0%</mat-option>
-                                <mat-option value="20_6m">6Month: Over +20%</mat-option>
-                                <mat-option value="10_6m">6Month: Over +10%</mat-option>
-                                <mat-option value="5_6m">6Month: Over +5%</mat-option>
-                                <mat-option value="0_6m">6Month: Over +0%</mat-option>
-                                <mat-option value="6m_20">6Month: Under +20%</mat-option>
-                                <mat-option value="6m_10">6Month: Under +10%</mat-option>
-                                <mat-option value="6m_5">6Month: Under +5%</mat-option>
-                                <mat-option value="6m_0">6Month: Under +0%</mat-option>
+                            <mat-select placeholder="Performance" [(ngModel)]="selectedPerfomance" (change)="onChange($event)">
+                                <mat-option value="">Any</mat-option>
+                                <mat-option value="1h:20_">1h: Over +20%</mat-option>
+                                <mat-option value="1h:10_">1h: Over +10%</mat-option>
+                                <mat-option value="1h:5_">1h: Over +5%</mat-option>
+                                <mat-option value="1h:0_">1h: Over +0%</mat-option>
+                                <mat-option value="1h:_20">1h: Under +20%</mat-option>
+                                <mat-option value="1h:_10">1h: Under +10%</mat-option>
+                                <mat-option value="1h:_5">1h: Under +5%</mat-option>
+                                <mat-option value="1h:_0">1h: Under +0%</mat-option>
+                                <mat-option value="24h:20_">24h: Over +20%</mat-option>
+                                <mat-option value="24h:10_">24h: Over +10%</mat-option>
+                                <mat-option value="24h:5_">24h: Over +5%</mat-option>
+                                <mat-option value="24h:0_">24h: Over +0%</mat-option>
+                                <mat-option value="24h:_20">24h: Under +20%</mat-option>
+                                <mat-option value="24h:_10">24h: Under +10%</mat-option>
+                                <mat-option value="24h:_5">24h: Under +5%</mat-option>
+                                <mat-option value="24h:_0">24h: Under +0%</mat-option>
+                                <mat-option value="7d:20_">1week: Over +20%</mat-option>
+                                <mat-option value="7d:10_">1week: Over +10%</mat-option>
+                                <mat-option value="7d:5_">1week: Over +5%</mat-option>
+                                <mat-option value="7d:0_">1week: Over +0%</mat-option>
+                                <mat-option value="7d:_20">1week: Under +20%</mat-option>
+                                <mat-option value="7d:_10">1week: Under +10%</mat-option>
+                                <mat-option value="7d:_5">1week: Under +5%</mat-option>
+                                <mat-option value="7d:_0">1week: Under +0%</mat-option>
+                                <mat-option value="1M:20_">1Month: Over +20%</mat-option>
+                                <mat-option value="1M:10_">1Month: Over +10%</mat-option>
+                                <mat-option value="1M:5_">1Month: Over +5%</mat-option>
+                                <mat-option value="1M:0_">1Month: Over +0%</mat-option>
+                                <mat-option value="1M:_20">1Month: Under +20%</mat-option>
+                                <mat-option value="1M:_10">1Month: Under +10%</mat-option>
+                                <mat-option value="1M:_5">1Month: Under +5%</mat-option>
+                                <mat-option value="1M:_0">1Month: Under +0%</mat-option>
+                                <mat-option value="6M:20_">6Month: Over +20%</mat-option>
+                                <mat-option value="6M:10_">6Month: Over +10%</mat-option>
+                                <mat-option value="6M:5_">6Month: Over +5%</mat-option>
+                                <mat-option value="6M:0_">6Month: Over +0%</mat-option>
+                                <mat-option value="6M:_20">6Month: Under +20%</mat-option>
+                                <mat-option value="6M:_10">6Month: Under +10%</mat-option>
+                                <mat-option value="6M:_5">6Month: Under +5%</mat-option>
+                                <mat-option value="6M:_0">6Month: Under +0%</mat-option>
                                
                             </mat-select>
                         </mat-form-field>
                     </td>
-
+                    <td>
+                        <mat-form-field>
+                            <mat-select placeholder="Order" [(ngModel)]="selectedOrder" (change)="onChange($event)">
+                                <mat-option value="cap:descending">Default(Market Cap Desc)</mat-option>
+                                <mat-option value="cap:ascending">Market Cap Ascending</mat-option>
+                                <mat-option value="cap:descending">Market Cap Descending</mat-option>
+                                <mat-option value="usd:ascending">Price Ascending</mat-option>
+                                <mat-option value="usd:descending">Price Descending</mat-option>
+                                <mat-option value="vlm:ascending">Volume Ascending</mat-option>
+                                <mat-option value="vlm:descending">Volume Descending</mat-option>
+                                <mat-option value="p_1h:ascending">Performance 1h Ascending</mat-option>
+                                <mat-option value="p_1h:descending">Performance 1h Descending</mat-option>
+                                <mat-option value="p_24h:ascending">Performance 24h Ascending</mat-option>
+                                <mat-option value="p_24h:descending">Performance 24h Descending</mat-option>
+                                <mat-option value="p_7d:ascending">Performance 1W Ascending</mat-option>
+                                <mat-option value="p_7d:descending">Performance 1W Descending</mat-option>
+                                <mat-option value="p_1M:ascending">Performance 1M Ascending</mat-option>
+                                <mat-option value="p_1M:descending">Performance 1M Descending</mat-option>
+                                <mat-option value="p_6M:ascending">Performance 6M Ascending</mat-option>
+                                <mat-option value="p_6M:descending">Performance 6M Descending</mat-option>                             
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
                 </tr>
 
             </tbody>
