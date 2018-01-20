@@ -182,6 +182,63 @@
                             </mat-select>
                         </mat-form-field>
                     </td>
+                    <td>
+                        <mat-form-field>
+                            <mat-select placeholder="Type" [(ngModel)]="selectedtype" (change)="onChange($event)">
+                                <mat-option value="">Any</mat-option>
+                                <mat-option value="false">Currency</mat-option>
+                                <mat-option value="true">Token</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field>
+                            <mat-select placeholder="Performance" [(ngModel)]="selectedPerfo" (change)="onChange($event)">
+                                <mat-option value="_">Any</mat-option>
+                                <mat-option value="20_1h">1h: Over +20%</mat-option>
+                                <mat-option value="10_1h">1h: Over +10%</mat-option>
+                                <mat-option value="5_1h">1h: Over +5%</mat-option>
+                                <mat-option value="0_1h">1h: Over +0%</mat-option>
+                                <mat-option value="1h_20">1h: Under +20%</mat-option>
+                                <mat-option value="1h_10">1h: Under +10%</mat-option>
+                                <mat-option value="1h_5">1h: Under +5%</mat-option>
+                                <mat-option value="1h_0">1h: Under +0%</mat-option>
+                                <mat-option value="20_24h">24h: Over +20%</mat-option>
+                                <mat-option value="10_24h">24h: Over +10%</mat-option>
+                                <mat-option value="5_24h">24h: Over +5%</mat-option>
+                                <mat-option value="0_24h">24h: Over +0%</mat-option>
+                                <mat-option value="24h_20">24h: Under +20%</mat-option>
+                                <mat-option value="24h_10">24h: Under +10%</mat-option>
+                                <mat-option value="24h_5">24h: Under +5%</mat-option>
+                                <mat-option value="24h_0">24h: Under +0%</mat-option>
+                                <mat-option value="20_1w">1week: Over +20%</mat-option>
+                                <mat-option value="10_1w">1week: Over +10%</mat-option>
+                                <mat-option value="5_1w">1week: Over +5%</mat-option>
+                                <mat-option value="0_1w">1week: Over +0%</mat-option>
+                                <mat-option value="1w_20">1week: Under +20%</mat-option>
+                                <mat-option value="1w_10">1week: Under +10%</mat-option>
+                                <mat-option value="1w_5">1week: Under +5%</mat-option>
+                                <mat-option value="1w_0">1week: Under +0%</mat-option>
+                                <mat-option value="20_1m">1Month: Over +20%</mat-option>
+                                <mat-option value="10_1m">1Month: Over +10%</mat-option>
+                                <mat-option value="5_1m">1Month: Over +5%</mat-option>
+                                <mat-option value="0_1m">1Month: Over +0%</mat-option>
+                                <mat-option value="1m_20">1Month: Under +20%</mat-option>
+                                <mat-option value="1m_10">1Month: Under +10%</mat-option>
+                                <mat-option value="1m_5">1Month: Under +5%</mat-option>
+                                <mat-option value="1m_0">1Month: Under +0%</mat-option>
+                                <mat-option value="20_6m">6Month: Over +20%</mat-option>
+                                <mat-option value="10_6m">6Month: Over +10%</mat-option>
+                                <mat-option value="5_6m">6Month: Over +5%</mat-option>
+                                <mat-option value="0_6m">6Month: Over +0%</mat-option>
+                                <mat-option value="6m_20">6Month: Under +20%</mat-option>
+                                <mat-option value="6m_10">6Month: Under +10%</mat-option>
+                                <mat-option value="6m_5">6Month: Under +5%</mat-option>
+                                <mat-option value="6m_0">6Month: Under +0%</mat-option>
+                               
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
 
                 </tr>
 

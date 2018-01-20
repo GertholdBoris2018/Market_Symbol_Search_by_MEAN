@@ -67,6 +67,14 @@ router.get('/getAllTickers', (req, res, next) => {
     var aStr = aFilter.split("_");
     var afilLow, afilHigh;
     var whereQuery = [{}];
+
+    var tFilter = req.query.tFilter;
+    
+    if(tFilter != "")
+    {
+        whereQuery.push({token : tFilter});
+        console.log(whereQuery);
+    }
     
     if(pStr[0] != "" || pStr[1] != ""){
         pStr[0] == "" ? 
@@ -104,6 +112,7 @@ router.get('/getAllTickers', (req, res, next) => {
         whereQuery.push({since_ts:{ $lt : aStr[0] }});
     }
 
+    console.log(whereQuery);
     CoinTicker.find({$and : whereQuery},null,{sort:{rank: 'ascending'}}, function(err,coins){
         var cnt_all = coins.length;
         CoinTicker.find({$and : whereQuery},null,{sort:{rank: 'ascending'},limit:100, skip: (page - 1) * 100}, function(err,coins){

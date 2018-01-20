@@ -41,6 +41,7 @@ export class CoinListComponent implements OnInit {
   selectedvolumn : string;
   selectedcirculate : string;
   selectedage : string;
+  selectedtype : string;
   currentTime : number;
   sendage : string;
 
@@ -61,6 +62,7 @@ export class CoinListComponent implements OnInit {
     this.selectedvolumn = "_";
     this.selectedcirculate = "_";
     this.selectedage = "_";
+    this.selectedtype = "";
     this.currentTime = Date.now();
     this.sendage = this.selectedage;
     
@@ -94,7 +96,8 @@ export class CoinListComponent implements OnInit {
             this.sendage = "_";
           }
             return this.exampleDatabase!.getRepoIssues(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex, this.selectedprice, this.selectedmarket, this.selectedvolumn, this.selectedcirculate, this.sendage);
+            this.sort.active, this.sort.direction, this.paginator.pageIndex, this.selectedprice, this.selectedmarket, this.selectedvolumn,
+             this.selectedcirculate, this.sendage, this.selectedtype);
         }),
         map(data => {
           // Flip flag to show that loading has finished.
@@ -158,7 +161,8 @@ export interface CoinTicker {
 export class ExampleHttpDao {
   constructor(private http: HttpClient ) {}
 
-  getRepoIssues(sort: string, order: string, page: number, priceFilter: string, marketFilter: string, volumnFilter: string, circulFilter : string, ageFilter : string): Observable<CoinTickersAPI> {
+  getRepoIssues(sort: string, order: string, page: number, priceFilter: string, marketFilter: string, volumnFilter: string, circulFilter : string,
+               ageFilter : string, typeFilter : string): Observable<CoinTickersAPI> {
 
     // const href = 'https://api.github.com/search/issues';
     // const requestUrl =
@@ -171,7 +175,7 @@ export class ExampleHttpDao {
     //send token with header
     const headers = new HttpHeaders().set('Authorization', token);
     const href = serverUrl + 'coins/getAllTickers';
-    const requestUrl = `${href}?sort=${sort}&order=${order}&page=${page + 1}&pFilter=${priceFilter}&mFilter=${marketFilter}&vFilter=${volumnFilter}&cFilter=${circulFilter}&aFilter=${ageFilter}`;
+    const requestUrl = `${href}?sort=${sort}&order=${order}&page=${page + 1}&pFilter=${priceFilter}&mFilter=${marketFilter}&vFilter=${volumnFilter}&cFilter=${circulFilter}&aFilter=${ageFilter}&tFilter=${typeFilter}`;
     //return this.http.get<CoinTickersAPI>(requestUrl,{ headers }); It does not allowed unauthorize token
     return this.http.get<CoinTickersAPI>(requestUrl);
   }
