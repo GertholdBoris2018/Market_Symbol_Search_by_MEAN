@@ -56,48 +56,61 @@ router.get('/getAllTickers', (req, res, next) => {
     var vFilter = req.query.vFilter;
     var vStr = vFilter.split("_");
     var vfilLow, vfilHigh;
-    var maxvolumn = -1;
+    var maxcirculate = -1;
 
     var cFilter = req.query.cFilter;
     var cStr = cFilter.split("_");
     var cfilLow, cfilHigh;
     var maxvolumn = -1;
+
+    var aFilter = req.query.aFilter;
+    var aStr = aFilter.split("_");
+    var afilLow, afilHigh;
+    var whereQuery = [{}];
     
-    CoinTicker.find({},null,{sort:{usd: -1}, limit:1}, function(err, max){
-        //get Max Price
-        maxPrice = max[0].usd;
-        pfilLow = !pStr[0] ? 0 : pStr[0];
-        pfilHigh = !pStr[1] ? maxPrice : pStr[1];
-        
-        CoinTicker.find({},null,{sort:{cap: -1}, limit:1}, function(err, max){
-            //get Max Market
-            maxMarket = max[0].cap;
-            mfilLow = !mStr[0] ? 0 : mStr[0];
-            mfilHigh = !mStr[1] ? maxMarket : mStr[1];
+    if(pStr[0] != "" || pStr[1] != ""){
+        pStr[0] == "" ? 
+        whereQuery.push({usd : { $lte : pStr[1] }}) :
+        pStr[1] == "" ? 
+        whereQuery.push({usd : {$gte : pStr[0]}}) :
+        whereQuery.push({usd:{ $gte : pStr[0], $lte :  pStr[1] }});
+    }
+         
+    if(mStr[0] != "" || mStr[1] != ""){
+        mStr[0] == "" ? 
+        whereQuery.push({cap : { $lte : mStr[1] }}) :
+        mStr[1] == "" ? 
+        whereQuery.push({cap : {$gte : mStr[0]}}) :
+        whereQuery.push({cap:{ $gte : mStr[0], $lte :  mStr[1] }});
+    }
+    if(vStr[0] != "" || vStr[1] != ""){
+        vStr[0] == "" ? 
+        whereQuery.push({vlm : { $lte : vStr[1] }}) :
+        vStr[1] == "" ? 
+        whereQuery.push({vlm : {$gte : vStr[0]}}) :
+        whereQuery.push({vlm:{ $gte : vStr[0], $lte :  vStr[1] }});
+    }
+    if(cStr[0] != "" || cStr[1] != ""){
+        cStr[0] == "" ? 
+        whereQuery.push({suppies : { $lte : cStr[1] }}) :
+        cStr[1] == "" ? 
+        whereQuery.push({suppies : {$gte : cStr[0]}}) :
+        whereQuery.push({suppies:{ $gte : cStr[0], $lte :  cStr[1] }});
+    }
+    
+    if(aStr[0] != "" || aStr[1] != ""){
+        aStr[0] == "" ? 
+        whereQuery.push({since_ts:{ $gt  : aStr[1] }}) :
+        whereQuery.push({since_ts:{ $lt : aStr[0] }});
+    }
 
-            CoinTicker.find({},null,{sort:{'vlm': -1}, limit:1}, function(err, max){
-                //get Max Market
-                maxvolumn = max[0]['vlm'];
-                vfilLow = !vStr[0] ? 0 : vStr[0];
-                vfilHigh = !vStr[1] ? maxvolumn : vStr[1];
-                CoinTicker.find({},null,{sort:{suppies: -1}, limit:1}, function(err, max){
-                    maxcirculate = max[0].suppies;
-                    cfilLow = !cStr[0] ? 0 : cStr[0];
-                    cfilHigh = !cStr[1] ? maxcirculate : cStr[1];
-                    //console.log("cfilLow => " + cfilLow + ", cHighLow => " + cfilHigh);
-                    CoinTicker.find({$and : [{usd:{ $gte: pfilLow, $lte : pfilHigh }}, {cap:{ $gte : mfilLow, $lte : mfilHigh }}, {vlm:{ $gte : vfilLow, $lte : vfilHigh }},{suppies:{ $gte : cfilLow, $lte : cfilHigh }}]},null,{sort:{rank: 'ascending'}}, function(err,coins){
-                        var cnt_all = coins.length;
-                        CoinTicker.find({$and : [{usd:{ $gte: pfilLow, $lte: pfilHigh }}, {cap:{ $gte : mfilLow, $lte : mfilHigh }}, {vlm:{ $gte : vfilLow, $lte : vfilHigh }},{suppies:{ $gte : cfilLow, $lte : cfilHigh }}]},null,{sort:{rank: 'ascending'},limit:100, skip: (page - 1) * 100}, function(err,coins){
-                            if(err) res.json({msg:'error',data:err});
-                            res.json({total_count : cnt_all, items : coins});
-                        });
-                    });
-                });
-
-                
-            });
+    CoinTicker.find({$and : whereQuery},null,{sort:{rank: 'ascending'}}, function(err,coins){
+        var cnt_all = coins.length;
+        CoinTicker.find({$and : whereQuery},null,{sort:{rank: 'ascending'},limit:100, skip: (page - 1) * 100}, function(err,coins){
+            if(err) res.json({msg:'error',data:err});
+            res.json({total_count : cnt_all, items : coins});
         });
-    });
+    }); 
         
 });
 module.exports = router;

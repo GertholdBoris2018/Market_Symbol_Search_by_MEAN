@@ -33,3 +33,14 @@
       font-size: 18px;
       font-family: initial;
   }
+
+  .example-table{
+      border-top: solid 3px #dadada !important;
+      border:solid 1px #dadada;
+  }
+
+  .header-name{
+      font-weight: bold;
+      font-size: 14px;
+      
+  }

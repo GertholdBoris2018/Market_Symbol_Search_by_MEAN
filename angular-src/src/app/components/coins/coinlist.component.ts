@@ -40,6 +40,9 @@ export class CoinListComponent implements OnInit {
   selectedmarket : string;
   selectedvolumn : string;
   selectedcirculate : string;
+  selectedage : string;
+  currentTime : number;
+  sendage : string;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -57,20 +60,41 @@ export class CoinListComponent implements OnInit {
     this.selectedmarket = "_";
     this.selectedvolumn = "_";
     this.selectedcirculate = "_";
+    this.selectedage = "_";
+    this.currentTime = Date.now();
+    this.sendage = this.selectedage;
+    
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
     this.timer = Observable.timer(2000,5000);
     
     this.sub = this.timer.subscribe(t => this.tickerFunc(t));
-    
+    console.log(this.currentTime);
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          //get price filtering value
-          return this.exampleDatabase!.getRepoIssues(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex, this.selectedprice, this.selectedmarket, this.selectedvolumn, this.selectedcirculate);
+
+          var aStr = this.selectedage.split("_");
+          if(aStr[0] != "")
+          {
+            this.sendage = (this.currentTime - parseInt(aStr[0])) + "_";
+            console.log(this.sendage);
+          
+          }
+          else if(aStr[1] != "")
+          {
+
+            this.sendage = "_" + (this.currentTime - parseInt(aStr[1]));
+            //console.log(this.sendage);
+           
+          }
+          else{
+            this.sendage = "_";
+          }
+            return this.exampleDatabase!.getRepoIssues(
+            this.sort.active, this.sort.direction, this.paginator.pageIndex, this.selectedprice, this.selectedmarket, this.selectedvolumn, this.selectedcirculate, this.sendage);
         }),
         map(data => {
           // Flip flag to show that loading has finished.
@@ -134,7 +158,7 @@ export interface CoinTicker {
 export class ExampleHttpDao {
   constructor(private http: HttpClient ) {}
 
-  getRepoIssues(sort: string, order: string, page: number, priceFilter: string, marketFilter: string, volumnFilter: string, circulFilter : string): Observable<CoinTickersAPI> {
+  getRepoIssues(sort: string, order: string, page: number, priceFilter: string, marketFilter: string, volumnFilter: string, circulFilter : string, ageFilter : string): Observable<CoinTickersAPI> {
 
     // const href = 'https://api.github.com/search/issues';
     // const requestUrl =
@@ -147,7 +171,7 @@ export class ExampleHttpDao {
     //send token with header
     const headers = new HttpHeaders().set('Authorization', token);
     const href = serverUrl + 'coins/getAllTickers';
-    const requestUrl = `${href}?sort=${sort}&order=${order}&page=${page + 1}&pFilter=${priceFilter}&mFilter=${marketFilter}&vFilter=${volumnFilter}&cFilter=${circulFilter}`;
+    const requestUrl = `${href}?sort=${sort}&order=${order}&page=${page + 1}&pFilter=${priceFilter}&mFilter=${marketFilter}&vFilter=${volumnFilter}&cFilter=${circulFilter}&aFilter=${ageFilter}`;
     //return this.http.get<CoinTickersAPI>(requestUrl,{ headers }); It does not allowed unauthorize token
     return this.http.get<CoinTickersAPI>(requestUrl);
   }

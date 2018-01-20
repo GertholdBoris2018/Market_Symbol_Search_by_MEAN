@@ -158,6 +158,32 @@
                         </mat-form-field>
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <mat-form-field>
+                            <mat-select placeholder="Age" [(ngModel)]="selectedage" (change)="onChange($event)">
+                                <mat-option value="_">Any</mat-option>
+                                <mat-option value="_259200000">Under  3 days</mat-option>
+                                <mat-option value="_604800000">Under  1 weeks</mat-option>
+                                <mat-option value="_2592000000">Under  1 months</mat-option>
+                                <mat-option value="_7776000000">Under  3 months</mat-option>
+                                <mat-option value="_15811200000">Under  6 months</mat-option>
+                                <mat-option value="_31536000000">Under  1 years</mat-option>
+                                <mat-option value="_63072000000">Under  2 years</mat-option>
+                                <mat-option value="_94608000000">Under  3years</mat-option>
+                                <mat-option value="_126144000000">Under  4years</mat-option>
+                                <mat-option value="157680000000_">Over  5 years</mat-option>
+                                <mat-option value="126144000000_">Over  4 years</mat-option>
+                                <mat-option value="94608000000_">Over  3 years</mat-option>
+                                <mat-option value="63072000000_">Over  2 years</mat-option>
+                                <mat-option value="31536000000_">Over  1 years</mat-option>
+                                <mat-option value="15811200000_">Over  6 months</mat-option>
+                                <mat-option value="7776000000_">Over  3 months</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </td>
+
+                </tr>
 
             </tbody>
     </table>
@@ -175,7 +201,7 @@ The actual rendered columns are set as a property on the row definition" -->
 
 <!-- Ranking Column -->
 <ng-container matColumnDef="#">
-    <mat-header-cell *matHeaderCellDef disableClear="true">
+    <mat-header-cell *matHeaderCellDef disableClear="true" class="header-name">
         #
     </mat-header-cell>
     <mat-cell *matCellDef="let row">{{ row.rank }}</mat-cell>
@@ -183,7 +209,7 @@ The actual rendered columns are set as a property on the row definition" -->
 
 <!-- Coin Name Column -->
 <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef class="header-name">Name</mat-header-cell>
     <mat-cell *matCellDef="let row"><div class="s-s-{{row.coinName}} currency-logo-sprite left margin-right-5 margin-top-5"></div>
         <a class="currency-name-container" href="#">{{ row.symbol }}</a>
         <div style="font-size: 12px; padding-left: 26px; color: rgb(134, 142, 150);">{{ row.name }}</div>
@@ -192,13 +218,13 @@ The actual rendered columns are set as a property on the row definition" -->
 
 <!-- Market Cap Column -->
 <ng-container matColumnDef="market_cap">
-    <mat-header-cell *matHeaderCellDef [ngClass]="'cellright'">Market Cap</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef [ngClass]="'cellright'" class="header-name">Market Cap</mat-header-cell>
     <mat-cell *matCellDef="let row" [ngClass]="'cellright'">${{ row.cap }}</mat-cell>
 </ng-container>
 
 <!-- Price for USD Column -->
 <ng-container matColumnDef="price">
-    <mat-header-cell *matHeaderCellDef [ngClass]="'cellright'">Price</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef [ngClass]="'cellright'" class="header-name">Price</mat-header-cell>
     <mat-cell *matCellDef="let row" [ngClass]="'cellright'">${{ row.usd }}</mat-cell>
 </ng-container>
 
@@ -206,43 +232,43 @@ The actual rendered columns are set as a property on the row definition" -->
 
 <!-- Volumn 24h Column -->
 <ng-container matColumnDef="volume24h">
-    <mat-header-cell *matHeaderCellDef [ngClass]="'cellright'">Volume(24h)</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef [ngClass]="'cellright'" class="header-name">Volume(24h)</mat-header-cell>
     <mat-cell *matCellDef="let row" [ngClass]="'cellright'">${{ row['vlm'] }}</mat-cell>
 </ng-container>
 
 <!-- Circulating Supply Column -->
 <ng-container matColumnDef="supplies">
-    <mat-header-cell *matHeaderCellDef [ngClass]="'cellright'">Circulating Supply</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef [ngClass]="'cellright'" class="header-name">Circulating Supply</mat-header-cell>
     <mat-cell *matCellDef="let row" [ngClass]="'cellright'">{{ row['suppies'] }}</mat-cell>
 </ng-container>
 
 <!-- Change(24) Column -->
 <ng-container matColumnDef="change24h">
-    <mat-header-cell *matHeaderCellDef [ngClass] = "'ctmWidth'" >%(24h)</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef [ngClass] = "'ctmWidth'" class="header-name">%(24h)</mat-header-cell>
     <mat-cell *matCellDef="let row" [ngClass] = "'ctmWidth'"><span class="{{row['p_24h']<0? 'red':'green'}}">${{ row['p_24h'] }} % </span></mat-cell>
 </ng-container>
 
 <!-- Change(1h) Column -->
 <ng-container matColumnDef="change1h">
-    <mat-header-cell *matHeaderCellDef [ngClass] = "'ctmWidth'" >%(1h)</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef [ngClass] = "'ctmWidth'" class="header-name">%(1h)</mat-header-cell>
     <mat-cell *matCellDef="let row"[ngClass] = "'ctmWidth'"><span class="{{row['p_1h']<0? 'red':'green'}}">${{ row['p_1h'] }} % </span></mat-cell>
 </ng-container>
 
 <!-- Change(7d) Column -->
 <ng-container matColumnDef="change7d">
-    <mat-header-cell *matHeaderCellDef [ngClass] = "'ctmWidth'" >%(7d)</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef [ngClass] = "'ctmWidth'" class="header-name">%(7d)</mat-header-cell>
     <mat-cell *matCellDef="let row" [ngClass] = "'ctmWidth'"><span class="{{row['p_7d']<0? 'red':'green'}}">${{ row['p_7d'] }} % </span></mat-cell>
 </ng-container>
 
 <!-- Change(1M) Column -->
 <ng-container matColumnDef="change1M">
-    <mat-header-cell *matHeaderCellDef [ngClass] = "'ctmWidth'" >%(1M)</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef [ngClass] = "'ctmWidth'" class="header-name">%(1M)</mat-header-cell>
     <mat-cell *matCellDef="let row" [ngClass] = "'ctmWidth'"><span class="{{row['p_1M']<0? 'red':'green'}}">${{ row['p_1M'] }} % </span></mat-cell>
 </ng-container>
 
 <!-- Change(7d) Column -->
 <ng-container matColumnDef="change6M">
-    <mat-header-cell *matHeaderCellDef [ngClass] = "'ctmWidth'" >%(6M)</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef [ngClass] = "'ctmWidth'" class="header-name">%(6M)</mat-header-cell>
     <mat-cell *matCellDef="let row" [ngClass] = "'ctmWidth'"><span class="{{row['p_6M']<0? 'red':'green'}}">${{ row['p_6M'] }} % </span></mat-cell>
 </ng-container>
 
