@@ -141,11 +141,14 @@ router.get('/getAllTickers', (req, res, next) => {
     oField = oFilter.split(":")[1];
     var sortQuery = {};
     sortQuery[oType] = oField;
-        
-    console.log(whereQuery);
+    
+    //get page count
+    var pCount = parseInt(req.query.pageCount);
+
+    console.log(pCount);
     CoinTicker.find({$and : whereQuery},null,{sort:sortQuery}, function(err,coins){
         var cnt_all = coins.length;
-        CoinTicker.find({$and : whereQuery},null,{sort:sortQuery,limit:100, skip: (page - 1) * 100}, function(err,coins){
+        CoinTicker.find({$and : whereQuery},null,{sort:sortQuery,limit:pCount, skip: (page - 1) * pCount}, function(err,coins){
             if(err) res.json({msg:'error',data:err});
             res.json({total_count : cnt_all, items : coins});
         });
