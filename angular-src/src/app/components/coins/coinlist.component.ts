@@ -13,6 +13,7 @@ import {catchError} from 'rxjs/operators/catchError';
 import {map} from 'rxjs/operators/map';
 import {startWith} from 'rxjs/operators/startWith';
 import {switchMap} from 'rxjs/operators/switchMap';
+import {MatListModule} from '@angular/material/list';
 //import { HttpHeaders } from '@angular/common/http/src/headers';
 import { Observable, Subscription } from 'rxjs/Rx';
 import { serverUrl } from 'app/config/globals';
@@ -29,7 +30,6 @@ export class CoinListComponent implements OnInit {
     'change24h','change7d','change1M','change6M'];
   exampleDatabase: ExampleHttpDao | null;
   dataSource = new MatTableDataSource();
-
   resultsLength = 0;
   isLoadingResults = false;
   isRateLimitReached = false;
@@ -46,6 +46,9 @@ export class CoinListComponent implements OnInit {
   selectedOrder : string;
   currentTime : number;
   sendage : string;
+
+  typesOfShoes = [];
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -69,6 +72,7 @@ export class CoinListComponent implements OnInit {
     this.selectedOrder = "cap:descending";
     this.currentTime = Date.now();
     this.sendage = this.selectedage;
+    this.typesOfShoes = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
     
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => {
@@ -109,7 +113,31 @@ export class CoinListComponent implements OnInit {
           // Flip flag to show that loading has finished.
           this.isLoadingResults = false;
           this.resultsLength = data.total_count;
-          return data.items;
+          let items = [];
+          data.items.forEach(function(item){
+            let tItem = {};
+            tItem['coinName'] = item['coinName'].toString();
+            tItem['name'] = item['name'].toString();
+            tItem['symbol'] = item['symbol'].toString();
+            tItem['rank'] = item['rank'].toString();
+            tItem['usd'] = numberWithCommas(item['usd']);
+            tItem['btc'] = item['btc'].toString();
+            tItem['vlm'] = numberWithCommas(item['vlm'].toString());
+            tItem['cap'] = numberWithCommas(item['cap']);
+            tItem['p_1h'] = item['p_1h'].toString();
+            tItem['p_7d'] = item['p_7d'].toString();
+            tItem['p_24h'] = item['p_24h'].toString();
+            tItem['p_1M'] = item['p_1M'].toString();
+            tItem['p_6M'] = item['p_6M'].toString();
+            tItem['since_ts'] = item['since_ts'].toString();
+            tItem['52w_l'] = item['52w_l'].toString();
+            tItem['52w_h'] = item['52w_h'].toString();
+            tItem['token'] = item['token'].toString();
+            tItem['suppies'] = numberWithCommas(item['suppies']);
+
+            items.push(tItem);
+          });
+          return items;
         }),
         catchError(() => {
           this.isLoadingResults = false;
@@ -118,7 +146,7 @@ export class CoinListComponent implements OnInit {
         })
       ).subscribe(data => 
         {
-          this.dataSource.data = data
+          this.dataSource.data = data;
         }
         
       );
@@ -127,7 +155,7 @@ export class CoinListComponent implements OnInit {
   tickerFunc(tick){
       console.log(this);
       this.ticks = tick;
-      this.paginator._changePageSize(this.paginator.pageSize); 
+      this.paginator._changePageSize(this.paginator.pageSize);
   }
 
   onChange(event)
@@ -136,7 +164,11 @@ export class CoinListComponent implements OnInit {
     this.paginator._changePageSize(this.paginator.pageSize); 
   }
 }
-
+const numberWithCommas = (x) => {
+  var parts = x.toString().split(".");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return parts.join(".");
+}
 export interface CoinTickersAPI {
   items: CoinTicker[];
   total_count: number;

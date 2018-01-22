@@ -1,3 +1,4 @@
+
 .example-header {
     display: flex;
     flex-direction: column;
@@ -62,4 +63,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .mat-list-icon {
+    color: rgba(0, 0, 0, 0.54);
   }
