@@ -8,3 +8,7 @@ npm install
 
 # run server
 npm start
+
+# database
+download the mongodb community version and run the mongod
+http://localhost:27017
