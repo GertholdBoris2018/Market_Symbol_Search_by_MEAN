@@ -13,6 +13,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CoinListComponent } from './components/coins/coinlist.component';
+import { highsLowsComponent } from './components/coins/highsLows.component';
 import { ProfileComponent } from './components/profile/profile.component';
 
 import { ValidateService } from './services/validate.service';
@@ -105,7 +106,8 @@ const appRoutes: Routes = [
 	{ path:'login', component: LoginComponent },
 	{ path:'dashboard', component: DashboardComponent, canActivate:[AuthGuard]},
   { path:'profile', component: ProfileComponent , canActivate:[AuthGuard]},
-  { path:'coinlist', component: CoinListComponent}
+  { path:'coinlist', component: CoinListComponent},
+  { path: 'highsLows', component: highsLowsComponent}
 ]
 
 @NgModule({
@@ -117,7 +119,8 @@ const appRoutes: Routes = [
     HomeComponent,
     DashboardComponent,
     ProfileComponent,
-    CoinListComponent
+    CoinListComponent,
+    highsLowsComponent
   ],
   imports: [
     BrowserModule,

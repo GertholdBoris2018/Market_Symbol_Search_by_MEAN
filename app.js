@@ -12,6 +12,7 @@ var fs = require('fs');
 var apis_config = 'config/apis.json';
 var Coin = require('./models/coin');
 var CoinTicker = require('./models/coinTicker');
+var CoinHistorical = require('./models/coinHistorical');
 //connect to database
 mongoose.connect(config.database);
 
@@ -87,131 +88,149 @@ app.listen(port, (req, res) => {
 // 	});
 	
 // }
+var util = require('util');
+var log_file = fs.createWriteStream(__dirname + '/debug.log', {flags : 'w'});
+var log_stdout = process.stdout;
+console.log = function(d) { //
+	log_file.write(util.format(d) + '\n');
+	log_stdout.write(util.format(d) + '\n');
+};
 
 var stored_coins = [];
 function getAllCoins(){
 	CoinTicker.find({},'coinName -_id', function(err,coints){
 		stored_coins = coints;
-		//console.log(coins);
+		// stored_coins.forEach(function(item, index, array){
+		// 	console.log('https://api.bitscreener.com/api/v2/graphs/ohlc/' + item.coinName + '?interval=1d');
+		// });
 	});
-	
 }
-
-//schedule task for get ticker value per coin
-
-// var rule = schedule.scheduleJob("*/1 * * * *", function() {
-// 	console.log('Creating Schedule for Get Coin Tickers Value...');
-// 	//get all existing coins from the database
-// 	getAllCoinTickers();
-// 	request(apis_config_options.getTickerCoin, function(err, response, body) {
-// 			//console.log(body);
-// 			var res = [];
-// 			try {
-// 				res = JSON.parse(body);
-// 			} catch (e) {
-// 				console.log(e);
-// 			}
-// 			if(res.length > 0){
-// 				res.forEach(function(item,idx,array){
-// 					var symbol = item.id;
-// 					var picked =  stored_coin_tickers.filter(function(value){ return value.coinName==symbol;});
-		
-// 					var newCoin = new CoinTicker();
-// 					newCoin.coinName = item.id;
-// 					newCoin.name = item.name;
-// 					newCoin.symbol = item.symbol;
-// 					newCoin.rank = item.rank;
-// 					newCoin.price_usd = item['price_usd'] != null ? item['price_usd']: 0;
-// 					newCoin.price_btc = item.price_btc;
-// 					newCoin['24h_volume_usd'] = item['24h_volume_usd'] != null ? item['24h_volume_usd']: 0;
-// 					newCoin['market_cap_usd'] = item['market_cap_usd'] != null ? item['market_cap_usd']: 0;
-// 					newCoin['available_supply'] = item['available_supply'] != null ? item['available_supply']:0;
-// 					newCoin['total_supply'] = item['total_supply'];
-// 					newCoin['max_supply'] = item['max_supply'];
-// 					newCoin['percent_change_1h'] = item['percent_change_1h'];
-// 					newCoin['percent_change_24h'] = item['percent_change_24h'];
-// 					newCoin['percent_change_7d'] = item['percent_change_7d'];
-// 					newCoin['last_updated'] = item['last_updated'];
-		
-		
-// 					if(picked.length > 0){
-// 						var query = { coinName : symbol };
-// 						var productToUpdate = {};
-// 						productToUpdate = Object.assign(productToUpdate, newCoin._doc);
-// 						delete productToUpdate._id;
-// 						CoinTicker.findOneAndUpdate(query, productToUpdate , function(err){
-// 							//if(err) console.log(err);
-// 						});
-// 					}
-// 					else{
-// 						newCoin.save();
-// 					}
-// 					if(idx === array.length - 1){
-// 						getAllCoinTickers();
-// 						console.log('Schedule for Get Coin Tickers Done.');
-// 					}
-// 				});
-// 			}
-			
-		
-// 	});
-// });
 
 var rule = schedule.scheduleJob("*/1 * * * *", function() {
 	console.log('Creating Schedule for Get Coins...');
 	//get all existing coins from the database
 	getAllCoins();
 	request(apis_config_options.getBitScreeners, function(err, response, body) {
-			//console.log(body);
-			var res = [];
-			try {
-				res = JSON.parse(body);
-			} catch (e) {
-				console.log(e);
-			}
-			if(res.length > 0){
-				res.forEach(function(item,idx,array){
-					var symbol = item.slug;
-					var picked =  stored_coins.filter(function(value){ return value.coinName==symbol;});
-		
-					var newCoin = new CoinTicker();
-					newCoin.coinName = item.slug;
-					newCoin.name = item.name;
-					newCoin.symbol = item.symbol;
-					newCoin.rank = item.rank;
-					newCoin.usd = item['usd'] != null ? item['usd'] : 0;
-					newCoin.btc = item['btc'] != null ? item['btc'] : 0;
-					newCoin['vlm'] = item['vlm'] != null ? item['vlm']: 0;
-					newCoin['cap'] = item['cap'] != null ? item['cap']: 0;
-					newCoin['since_ts'] = item['since_ts'] != null ? item['since_ts']:0;
-					newCoin['p_1h'] = item['p_1h'] != null? Math.round(item['p_1h']*10000) / 100 : 0;
-					newCoin['p_24h'] = item['p_24h'] != null? Math.round(item['p_24h'] * 10000) / 100 : 0;
-					newCoin['p_7d'] = item['p_7d'] != null? Math.round(item['p_7d'] * 10000) / 100 : 0;
-					newCoin['p_1M'] = item['p_1M'] != null? Math.round(item['p_1M'] * 10000) / 100 : 0;
-					newCoin['p_6M'] = item['p_6M'] != null? Math.round(item['p_6M'] * 10000) / 100 : 0;
-					newCoin['token'] = item['token'];
-					newCoin['52w_l'] = item['52w_l'] != null? item['52w_l'] : 0;
-					newCoin['52w_h'] = item['52w_h'] != null? item['52w_h'] : 0;
-					newCoin['suppies'] = Math.round(item['cap'] / item['usd']);
-					if(picked.length > 0){
-						var query = { coinName : symbol };
-						var productToUpdate = {};
-						productToUpdate = Object.assign(productToUpdate, newCoin._doc);
-						delete productToUpdate._id;
-						CoinTicker.findOneAndUpdate(query, productToUpdate , function(err){
-							//if(err) console.log(err);
-						});
-					}
-					else{
-						newCoin.save();
-					}
-					if(idx === array.length - 1){
-						getAllCoins();
-						console.log('Schedule for Get Coin Tickers Done.');
-					}
-				});
-			}
-			
-		
+		//console.log(body);
+		var res = [];
+		try {
+			res = JSON.parse(body);
+		} catch (e) {
+			console.log(e);
+		}
+		if(res.length > 0){
+			res.forEach(function(item,idx,array){
+				var symbol = item.slug;
+				var picked =  stored_coins.filter(function(value){ return value.coinName==symbol;});
+	
+				var newCoin = new CoinTicker();
+				newCoin.coinName = item.slug;
+				newCoin.name = item.name;
+				newCoin.symbol = item.symbol;
+				newCoin.rank = item.rank;
+				newCoin.usd = item['usd'] != null ? item['usd'] : 0;
+				newCoin.btc = item['btc'] != null ? item['btc'] : 0;
+				newCoin['vlm'] = item['vlm'] != null ? item['vlm']: 0;
+				newCoin['cap'] = item['cap'] != null ? item['cap']: 0;
+				newCoin['since_ts'] = item['since_ts'] != null ? item['since_ts']:0;
+				newCoin['p_1h'] = item['p_1h'] != null? Math.round(item['p_1h']*10000) / 100 : 0;
+				newCoin['p_24h'] = item['p_24h'] != null? Math.round(item['p_24h'] * 10000) / 100 : 0;
+				newCoin['p_7d'] = item['p_7d'] != null? Math.round(item['p_7d'] * 10000) / 100 : 0;
+				newCoin['p_1M'] = item['p_1M'] != null? Math.round(item['p_1M'] * 10000) / 100 : 0;
+				newCoin['p_6M'] = item['p_6M'] != null? Math.round(item['p_6M'] * 10000) / 100 : 0;
+				newCoin['token'] = item['token'];
+				newCoin['52w_l'] = item['52w_l'] != null? item['52w_l'] : 0;
+				newCoin['52w_h'] = item['52w_h'] != null? item['52w_h'] : 0;
+				newCoin['suppies'] = Math.round(item['cap'] / item['usd']);
+				if(picked.length > 0){
+					var query = { coinName : symbol };
+					var productToUpdate = {};
+					productToUpdate = Object.assign(productToUpdate, newCoin._doc);
+					delete productToUpdate._id;
+					CoinTicker.findOneAndUpdate(query, productToUpdate , function(err){
+						//if(err) console.log(err);
+					});
+				}
+				else{
+					newCoin.save();
+				}
+				if(idx === array.length - 1){
+					getAllCoins();
+					console.log('Schedule for Get Coin Tickers Done.');
+				}
+			});
+		}
 	});
 });
+
+//schedule for coins' historical data -- it will be called at 9AM
+var async = require('async');
+var rp = require('request-promise');
+var rule_historical = new schedule.RecurrenceRule();
+rule_historical.dayOfWeek = [new schedule.Range(0,6)];
+rule_historical.hour = 16;
+rule_historical.minute = 18;
+var moment = require('moment');
+var time = moment();
+var time_format = time.format('YYYY-MM-DD HH:mm:ss Z');
+console.log(time_format);
+
+var j = schedule.scheduleJob(rule_historical, function(){
+	console.log('It is time to get Historical datas for coins...');
+	// getAllCoins();
+	// //make url request for getting histrocial data per coin
+	// var calls = [];
+	// var URLs = [];
+	// var coinNames = [];
+	// CoinHistorical.remove({}, function(err) {
+	// 	console.log(err);
+	// 	if (err) {
+	// 		console.log(err)
+	// 	} else {
+	// 		CoinTicker.find({},'coinName -_id', function(err,coints){
+				
+	// 			coints.forEach(function(item,idx,array){
+	// 				// console.log(item.coinName);
+	// 				var cName = item.coinName;
+	// 				var url = 'https://api.bitscreener.com/api/v2/graphs/ohlc/'+item.coinName+'?interval=1d';
+	// 				URLs.push(url);
+	// 				coinNames.push(cName);
+	// 			});
+	// 			process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+	// 			var responseArray = Promise.all(URLs.map((url,idx) => rp({
+	// 				uri: url,
+	// 				method: 'GET',
+	// 				headers: {
+	// 					'Connection': 'close'
+	// 				}
+	// 			}).then((response) => {
+	// 				console.log(idx);
+	// 				//console.log(response);
+	// 				var res = null;
+	// 				try {
+	// 					res = JSON.parse(response);
+	// 				} catch (e) {
+	// 					console.log(e);
+	// 				}
+	// 				//console.log(res);
+	// 				var ts = res['ts'];
+	// 				//console.log(ts);
+	// 				ts.forEach(function(item,idx,array){
+	// 					var hist = new CoinHistorical();
+	// 					hist.coinName = coinNames[idx];
+	// 					hist.ts = ts[idx];
+	// 					hist.open = res["open"][idx];
+	// 					hist.high = res["high"][idx];
+	// 					hist.low = res["low"][idx];
+	// 					hist.close = res["close"][idx];
+	// 					hist.vlm = res["vlm"][idx];
+	// 					hist['max_cap'] = res["max_cap"][idx];
+	// 					hist.save();
+	// 				})
+	// 			  	})
+	// 			));
+	// 		});
+	// 	}
+	// });
+});
+

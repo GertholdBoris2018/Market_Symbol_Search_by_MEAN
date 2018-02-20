@@ -42,7 +42,7 @@
 						<div>  
 							<ul> 
 								<li> <a [routerLink]="['/coinlist']" (click)="show=false">Coins List</a> </li> 
-								<li> <a target="_self" href="#">Coins New</a> </li> 
+								<li> <a [routerLink]="['/highsLows']" (click)="show=false">New Highs & Lows</a> </li> 
 							</ul>
 						</div>
 						<a (click)="closeTopBar()" href="javascript:;" class="company-info-close"> <i class="bc-glyph-times"></i> </a> 

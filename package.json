@@ -5,21 +5,25 @@
 		"main": "app.js",
 		"scripts": {
 				"test": "echo \"Error: no test specified\" && exit 1",
-				"start": "node app"
+				"start": "node --max_old_space_size=4096 app"
 		},
 		"dependencies": {
+				"async": "2.6.0",
 				"bcryptjs": "*",
 				"body-parser": "*",
 				"cors": "*",
 				"express": "*",
+				"filereader": "0.10.3",
+				"increase-memory-limit": "^1.0.6",
 				"jsonwebtoken": "*",
 				"mongoose": "^4.10.8",
+				"morgan": "~1.9.0",
+				"mssql": "^4.1.0",
+				"node-schedule": "^1.2.5",
 				"passport": "*",
 				"passport-jwt": "*",
 				"request": "^2.83.0",
-				"morgan": "~1.9.0",
-				"node-schedule": "^1.2.5",
-				"filereader": "0.10.3"
+				"request-promise": "^4.2.2"
 		},
 		"author": "Jon",
 		"license": "ISC"
