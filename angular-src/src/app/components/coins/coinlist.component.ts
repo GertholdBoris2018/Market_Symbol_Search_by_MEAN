@@ -78,7 +78,7 @@ export class CoinListComponent implements OnInit {
     this.sort.sortChange.subscribe(() => {
       this.paginator.pageIndex = 0,this.paginator.pageSize = 100
     });
-    this.timer = Observable.timer(60000,100000);
+    this.timer = Observable.timer(10000,20000);
     
     this.sub = this.timer.subscribe(t => this.tickerFunc(t));
     merge(this.sort.sortChange, this.paginator.page)

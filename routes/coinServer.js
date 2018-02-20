@@ -155,4 +155,41 @@ router.get('/getAllTickers', (req, res, next) => {
     }); 
         
 });
+// var sql = require("mssql");
+router.get('/highsLows', (req, res, next) => {
+    console.log('highs&Lows');
+    res.json({result : 'ok'});
+    //connect mssql database
+    
+    // config for your database
+    // var dbconfig = {
+    //     user: 'web_user',
+    //     password: 'p4JP97uyfg54jDrq',
+    //     server: '204.12.62.182', 
+    //     database: 'CryptoMarkets' 
+    // };
+
+    // // connect to your database
+    // var pool = sql.connect(dbconfig, function (err) {
+
+    //     if (err) console.log(err);
+
+    //     console.log('db request here');
+    //     // create Request object
+    //     var request = new sql.Request();
+        
+    //     // query to the database and get the records
+    //     request.query('select * from dbo.Historical', function (err, recordset) {
+            
+    //         if (err) console.log(err)
+    //         console.log(recordset);
+    //         // send records as a response
+    //         res.json({result : recordset});
+    //     });
+    // });
+    // pool.close();
+    
+
+});
+
 module.exports = router;
