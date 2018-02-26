@@ -3,7 +3,7 @@ import { CoinService } from '../../services/coin.service';
 import { Router } from '@angular/router';
 import {Http, Headers} from "@angular/http";
 
-import {Component, OnInit,AfterViewInit, ViewChild} from '@angular/core';
+import {Component, OnInit,AfterViewInit, ViewChild, OnDestroy} from '@angular/core';
 import {HttpClient,HttpHeaders} from '@angular/common/http';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 
@@ -151,7 +151,9 @@ export class CoinListComponent implements OnInit {
         
       );
   }
-
+  ngOnDestroy(){
+    this.sub.unsubscribe();
+  }
   tickerFunc(tick){
       console.log(this);
       this.ticks = tick;

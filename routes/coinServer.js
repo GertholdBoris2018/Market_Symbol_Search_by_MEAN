@@ -7,7 +7,8 @@ const config = require('../config/database');
 const User = require('../models/user');
 var Coin = require('../models/coin');
 var CoinTicker = require('../models/coinTicker');
-
+var request = require('request');
+var xml2js = require('xml2js');
 //get all coins
 router.get('/getAll', (req, res, next) => {
     Coin.find({}, function(err,coins){
@@ -33,6 +34,11 @@ function addCommas(nStr) {
     }
     return x1 + x2;
 }
+
+function xmlFileToJs(xmlStr, cb) {
+    xml2js.parseString(xmlStr, {}, cb);
+}
+
 const util = require('util');
 
 
@@ -156,38 +162,65 @@ router.get('/getAllTickers', (req, res, next) => {
         
 });
 // var sql = require("mssql");
-router.get('/highsLows', (req, res, next) => {
-    console.log('highs&Lows');
-    res.json({result : 'ok'});
-    //connect mssql database
+router.get('/getHighs', (req, res, next) => {
+    console.log('getting Highs');
     
-    // config for your database
-    // var dbconfig = {
-    //     user: 'web_user',
-    //     password: 'p4JP97uyfg54jDrq',
-    //     server: '204.12.62.182', 
-    //     database: 'CryptoMarkets' 
-    // };
+    var page = req.query.page;
+    var pageCount = parseInt(req.query.pageCount);
+    var selectedHighs = req.query.selectedHighs;
+    console.log('page => ' + page);
+    console.log('pageCount => ' + pageCount);
+    console.log('selectedHighs => ' + selectedHighs);
+    var url = 'http://204.12.62.182/cryptoservice/ServiceCS.asmx/getHighs?page='+page+'&pageCount='+pageCount+'&selectedHighs='+selectedHighs;
+    //get page count
+    request(url, function(err, response, body) {
+		console.log(body);
+		xmlFileToJs(body, function (err, obj) {
+            if (err) throw (err);
+            console.log(obj.returnType.total_count);
+            var tCnt = parseInt(obj.returnType.total_count[0]);
+            console.log(obj.returnType.items[0].jsonCoinInfo);
+            res.json(
+                    {total_count : tCnt, 
+                    items : obj.returnType.items[0].jsonCoinInfo});
+        });
+	});
+    // res.json(
+    //     {total_count : 3, 
+    //     items : [{rank:'1',coinName: 'bitcoin'},
+    //     {rank:'2',coinName: 'etherum'},
+    //     {rank:'3',coinName: 'ripple'}]});
+    
 
-    // // connect to your database
-    // var pool = sql.connect(dbconfig, function (err) {
-
-    //     if (err) console.log(err);
-
-    //     console.log('db request here');
-    //     // create Request object
-    //     var request = new sql.Request();
-        
-    //     // query to the database and get the records
-    //     request.query('select * from dbo.Historical', function (err, recordset) {
-            
-    //         if (err) console.log(err)
-    //         console.log(recordset);
-    //         // send records as a response
-    //         res.json({result : recordset});
-    //     });
-    // });
-    // pool.close();
+});
+router.get('/getLows', (req, res, next) => {
+    console.log('getting Lows');
+    
+    var page = req.query.page;
+    var pageCount = parseInt(req.query.pageCount);
+    var selectedLows = req.query.selectedLows;
+    console.log('page => ' + page);
+    console.log('pageCount => ' + pageCount);
+    console.log('selectedLows => ' + selectedLows);
+    var url = 'http://204.12.62.182/cryptoservice/ServiceCS.asmx/getLows?page='+page+'&pageCount='+pageCount+'&selectedLows='+selectedLows;
+    //get page count
+    request(url, function(err, response, body) {
+		console.log(body);
+		xmlFileToJs(body, function (err, obj) {
+            if (err) throw (err);
+            console.log(obj.returnType.total_count);
+            var tCnt = parseInt(obj.returnType.total_count[0]);
+            console.log(obj.returnType.items[0].jsonCoinInfo);
+            res.json(
+                    {total_count : tCnt, 
+                    items : obj.returnType.items[0].jsonCoinInfo});
+        });
+	});
+    // res.json(
+    //     {total_count : 3, 
+    //     items : [{rank:'1',coinName: 'bitcoin'},
+    //     {rank:'2',coinName: 'etherum'},
+    //     {rank:'3',coinName: 'ripple'}]});
     
 
 });
