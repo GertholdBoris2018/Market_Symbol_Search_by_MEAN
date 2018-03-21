@@ -1,5 +1,6 @@
-<h2 class="page-header">All Cryptocurrencies Exchanges - {{selectedHighs}} Month New Highs</h2>
-<mat-tab-group #tabGroup>
+<h2 *ngIf="isHighs" class="page-header">All Cryptocurrencies Exchanges - {{selectedHighs}} Month New Highs</h2>
+<h2 *ngIf="!isHighs" class="page-header">All Cryptocurrencies Exchanges - {{selectedLows}} Month New Lows</h2>
+<mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)">
     <mat-tab label="HIGHS">
         <mat-form-field>
             <mat-select [(ngModel)]="selectedHighs" (change)="onChange($event)">
@@ -32,7 +33,38 @@
                     {{row.coinName}}
                 </mat-cell>
             </ng-container>
-        
+            <ng-container matColumnDef="last">
+                <mat-header-cell *matHeaderCellDef class="header-name">Last</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    ${{ row.price }}
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="symbol">
+                <mat-header-cell *matHeaderCellDef class="header-name">Symbol</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    {{ row.symbol }}
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="change">
+                <mat-header-cell *matHeaderCellDef class="header-name">Change</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <span class="{{row.change<0? 'red':'green'}}">{{ row.change > 0? '+' + row.change: row.change }}</span>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="changeP">
+                <mat-header-cell *matHeaderCellDef class="header-name">%Chg</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <span class="{{row.changeP<0? 'red':'green'}}">{{ row.changeP > 0 ? '+' + row.changeP : row.changeP }}%</span>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="volume">
+                <mat-header-cell *matHeaderCellDef class="header-name">Volume</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    {{ row.volume }}
+                </mat-cell>
+            </ng-container>
         
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
@@ -72,8 +104,37 @@
                         {{row.coinName}}
                     </mat-cell>
                 </ng-container>
-            
-            
+                <ng-container matColumnDef="last">
+                    <mat-header-cell *matHeaderCellDef class="header-name">Last</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        ${{ row.price }}
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="symbol">
+                    <mat-header-cell *matHeaderCellDef class="header-name">Symbol</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        {{ row.symbol }}
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="change">
+                    <mat-header-cell *matHeaderCellDef class="header-name">Change</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <span class="{{row.change<0? 'red':'green'}}">{{ row.change > 0? '+' + row.change: row.change }}</span>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="changeP">
+                    <mat-header-cell *matHeaderCellDef class="header-name">%Chg</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        <span class="{{row.changeP<0? 'red':'green'}}">{{ row.changeP > 0 ? '+' + row.changeP : row.changeP }}%</span>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="volume">
+                    <mat-header-cell *matHeaderCellDef class="header-name">Volume</mat-header-cell>
+                    <mat-cell *matCellDef="let row">
+                        {{ row.volume }}
+                    </mat-cell>
+                </ng-container>
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
                 

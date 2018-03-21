@@ -5,7 +5,7 @@ import {Http, Headers} from "@angular/http";
 
 import {Component, OnInit,AfterViewInit, ViewChild, OnDestroy} from '@angular/core';
 import {HttpClient,HttpHeaders} from '@angular/common/http';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTableDataSource, MatTabChangeEvent } from '@angular/material';
 
 import {merge} from 'rxjs/observable/merge';
 import {of as observableOf} from 'rxjs/observable/of';
@@ -26,7 +26,7 @@ import { Paginator } from 'angular2-datatable/lib/Paginator';
 export class highsLowsComponent implements OnInit {
 
   displayedColumns = [
-     'name'];
+     'name','symbol','last','change','changeP','volume'];
   exampleDatabase: ExampleHttpDao | null;
   exampleDatabase_Low : ExampleHttpDao_Low | null;
 
@@ -55,7 +55,7 @@ export class highsLowsComponent implements OnInit {
   selectedHighs : string;
   selectedLows : string;
   typesOfShoes = [];
-
+  isHighs : boolean;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -78,10 +78,8 @@ export class highsLowsComponent implements OnInit {
     this.selectedHighs = '1';
     this.selectedLows = '1';
     this.hBSort = this.sort;
-    //this.hBpaginator = this.paginator;
     this.lBSort = this.sort;
-    //this.lBpaginator = this.paginator;
-
+    this.isHighs = true;
     
     this.exampleDatabase = new ExampleHttpDao(this.http);
     this.exampleDatabase_Low = new ExampleHttpDao_Low(this.http);
@@ -107,7 +105,23 @@ export class highsLowsComponent implements OnInit {
           this.isLoadingResults = false;
           this.resultsLength = data.total_count;
           //this.hBpaginator.length = data.total_count;
-          return data.items;
+          let items = [];
+          data.items.forEach(function(item){
+            let tItem = {};
+            tItem['coinName'] = item['coinName'].toString();
+            tItem['symbol'] = item['symbol'].toString();
+            tItem['price'] = parseFloat(item['price']);
+            tItem['pclose'] = parseFloat(item['pclose']);
+            var change = tItem['price'] - tItem['pclose'];
+            var str = change.toExponential(2).toString().split("e+")[1];
+            //console.log(str);
+            tItem['change'] =  change!=0? str != "0"? change.toExponential(2):change.toFixed(2) : 0;
+            //tItem['change'] = change < 0 ? "-" + tItem['change'] : "+" + tItem['change'];
+            tItem['changeP'] = change!= 0? ((change / tItem['pclose']) * 100).toFixed(3) : 0;
+            tItem['volume'] = item['volume'].toString();
+            items.push(tItem);
+          });
+          return items;
         }),
         catchError(() => {
           this.isLoadingResults = false;
@@ -134,7 +148,24 @@ export class highsLowsComponent implements OnInit {
           this.isLoadingResults = false;
           //this.lBpaginator.length = data.total_count;
           this.resultsLength1 = data.total_count;
-          return data.items;
+
+          let items = [];
+          data.items.forEach(function(item){
+            let tItem = {};
+            tItem['coinName'] = item['coinName'].toString();
+            tItem['symbol'] = item['symbol'].toString();
+            tItem['price'] = parseFloat(item['price']);
+            tItem['pclose'] = parseFloat(item['pclose']);
+            var change = tItem['price'] - tItem['pclose'];
+            var str = change.toExponential(2).toString().split("e+")[1];
+            //console.log(str);
+            tItem['change'] =  change!=0? str != "0"? change.toExponential(2):change.toFixed(2) : 0;
+            //tItem['change'] = change < 0 ? "-" + tItem['change'] : "+" + tItem['change'];
+            tItem['changeP'] = change!= 0 ? ((change / tItem['pclose']) * 100).toFixed(3) : 0;
+            tItem['volume'] = item['volume'].toString();
+            items.push(tItem);
+          });
+          return items;
         }),
         catchError(() => {
           this.isLoadingResults = false;
@@ -169,6 +200,11 @@ export class highsLowsComponent implements OnInit {
     this.lBpaginator.pageIndex = 0;
     this.lBpaginator._changePageSize(this.lBpaginator.pageSize); 
   }
+  public tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+      console.log(tabChangeEvent);
+      if(tabChangeEvent.index == 0) this.isHighs = true;
+      else this.isHighs = false;
+  }
 }
 const numberWithCommas = (x) => {
   var parts = x.toString().split(".");
@@ -181,7 +217,8 @@ export interface CoinTickersAPI {
 }
 
 export interface CoinTicker {
-  'coinName': string
+  'coinName': string,
+  'price': string
 }
 
 /** An example database that the data source uses to retrieve data for the table. */
